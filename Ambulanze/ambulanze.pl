@@ -1,10 +1,8 @@
 % Pianificazione del percorso ottimale di due ambulanze in ambito urbano
 % Progetto di Intelligenza Artificiale I                           08/09
-% Julio Molina Chasserot		             Prof. Mario Ornaghi
-% Marco Severi
-% 3 Febbraio 2009 
+% 3 Febbraio 2009
 
-% File principale del programma 
+% File principale del programma
 % La soluzione al problema di ricerca ha inizio dal predicato:
 % percorso(at(L1,L2,P1,A1,A2))
 % •	L1: dove si trova la prima ambulanza
@@ -22,7 +20,7 @@
 :- no_check([setof(_,_,_), is(_,_)]).
 
 
-type int --> 0; 3; 6; 9. 
+type int --> 0; 3; 6; 9.
 
 % osp è l'ospedale, i sono gli isolati
 type luogo --> osp; i2; i3; i4; i5; i6; i7.
@@ -36,14 +34,14 @@ type carica --> c;v.
 %    posizione ambulanza2,
 %    lista dei quartieri che contengono pazienti da curare,
 %    situazione ambulanza1,
-%    situazione ambulanza2)    
+%    situazione ambulanza2)
 type nodo --> at(luogo,luogo,list(luogo),carica,carica).
 
 
 pred trovato(nodo).
    %  trovato(+S):    i due robo sono nei due lab
 pred vicini(nodo, list(nodo)).
-   % vicini(+N, -L):   L è la lista dei "vicini di L"   
+   % vicini(+N, -L):   L è la lista dei "vicini di L"
    %                   (collegati ad L da un arco)
 pred costo(nodo,nodo, int).
    % costo(+N1,+N2,-C) : C è il costo dell'arco (N1,N2)
@@ -138,7 +136,7 @@ costo(at(L1,osp,[L1],v,v), at(L1,osp,[],c,v), 3).
 
 % SF
 costo(at(osp,osp,[],c,v), at(osp,osp,[],v,v), 3).
-	
+
 mossa(S,S1) :- costo(S,S1,_).
 
 % Grafo rappresentate il quartiere
@@ -198,30 +196,30 @@ cond_mov(at(L1,L2,[X|_],c,v), W):-  dist(L1,osp,W1), dist(L2,X,W2), dist(X,osp,W
 
 % Non ci sono pazienti da caricare e la lista è vuota
 % la prima è carica e la seconda scarica
-cond_mov(at(L1,L2,[],c,v), W):- 
+cond_mov(at(L1,L2,[],c,v), W):-
 			  dist(L1,osp,W1),
 			  dist(L2,osp,W2),
- 			  W is W1+W2.
+			  W is W1+W2.
 
 % E' rimasto un solo paziente da caricare
 % la prima è carica e la seconda scarica
 cond_mov(at(L1,L2,[X],c,v), W):- dist(X,osp,W1),
 			  dist(L1,osp,W2),
 			  dist(L2,X,W3),
- 			  W is W1+W2+W3+3.
+			  W is W1+W2+W3+3.
 
 % Non ci sono pazienti da caricare e la lista è vuota
 % la prima è scarica e la seconda carica
 cond_mov(at(L1,L2,[],v,c), W):-  dist(L1,osp,W1),
 			  dist(L2,osp,W2),
- 			  W is W1+W2.
+			  W is W1+W2.
 
 % E' rimasto un solo paziente da caricare
 % la prima è scarica e la seconda carica
 cond_mov(at(L1,L2,[X],v,c), W):- dist(X,osp,W1),
 			  dist(L1,X,W2),
 			  dist(L2,osp,W3),
- 			  W is W1+W2+W3+3.
+			  W is W1+W2+W3+3.
 
 % Ci sono più pazienti da caricare
 % la prima è scarica e la seconda carica
@@ -231,7 +229,7 @@ cond_mov(at(L1,L2,[X|_],v,c), W):- dist(L1,X,W1), dist(X,osp,W3), dist(L2,osp,W2
 % sono entrambe vuote
 cond_mov(at(L1,L2,[],v,v), W):-  dist(L1,osp,W1),
 			  dist(L2,osp,W2),
- 			  W is W1+W2.
+			  W is W1+W2.
 
 % C'è un solo paziente da caricare
 % sono entrambe vuote
@@ -240,7 +238,7 @@ cond_mov(at(L1,L2,[X],v,v), W):- dist(X,osp,W1),
 			  dist(L1,X,W2),
 			  dist(L2,X,W3),
 			  W2 =< W3,
- 			  W is W1+W2+3.
+			  W is W1+W2+3.
 
 % C'è un solo paziente da caricare
 % sono entrambe vuote
@@ -249,10 +247,10 @@ cond_mov(at(L1,L2,[X],v,v), W):- dist(X,osp,W1),
 			  dist(L1,X,W2),
 			  dist(L2,X,W3),
 			  W3 < W2,
- 			  W is W1+W3+3.
+			  W is W1+W3+3.
 
 % C'è più di un paziente da caricare
-% la distanza della prima ambulanza dal primo paziente + quella 
+% la distanza della prima ambulanza dal primo paziente + quella
 % della seconda ambulanza dal secondo paziente è minore dell'inverso,
 % sono entrambe vuote
 cond_mov(at(L1,L2,[X|C],v,v), W):- C=[Y|_],
@@ -266,7 +264,7 @@ cond_mov(at(L1,L2,[X|C],v,v), W):- C=[Y|_],
 			  W is W1+W2+W3+W4+3.
 
 % C'è più di un paziente da caricare
-% la distanza della prima ambulanza dal secondo paziente + quella 
+% la distanza della prima ambulanza dal secondo paziente + quella
 % della seconda ambulanza dal primo paziente è minore dell'inverso,
 % sono entrambe vuote
 cond_mov(at(L1,L2,[X|C],v,v), W):- C=[Y|_],
@@ -283,7 +281,7 @@ cond_mov(at(L1,L2,[X|C],v,v), W):- C=[Y|_],
 % e non ci sono più pazienti da caricare
 cond_mov(at(L1,L2,[],c,c), W):-  dist(L1,osp,W1),
 			  dist(L2,osp,W2),
- 			  W is W1+W2.
+			  W is W1+W2.
 
 % Entrambe le ambulanze sono cariche
 cond_mov(at(L1,L2,_,c,c), W):- dist(L1,osp,W1),dist(L2,osp,W2),W is W1+W2.
