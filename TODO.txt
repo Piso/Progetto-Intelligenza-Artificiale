@@ -1,0 +1,28 @@
+Aggiornato il 30-03-2012 20:41
+
+Ho sistemato l'ossatura di base di evacuazione.pl
+
+E' necessario:
+
+-trovato
+
+-vicini
+
+-mossa?
+
+-IMPORTANTE: una user interface che stampi e accetti comandi
+
+
+Successivamente:
+
+-vedere di integrare gli algoritmi di ricerca
+
+-rendere più complicato il tutto
+	-più punti di partenza
+	-più punti di arrivo
+	-molti più incroci
+	-condizioni di restrizione
+		-strada agibile
+		-vento
+		-ecc...
+
