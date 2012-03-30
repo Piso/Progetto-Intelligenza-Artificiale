@@ -1,0 +1,155 @@
+TYPED-PROLOG:   TYPE CHECKING / TYPE RECONSTRUCTION CODE  (Version 1.0)
+----------------------------------------------------------------------
+
+This directory contains the Type Checking/Reconstruction code (written
+in Prolog) for TYPED-PROLOG. This code has been tested on the
+C-Prolog (Version 1.4) interpreter and the Quintus Prolog (Release 3.0) 
+SICStus Prolog (Version 0.7) and SB-Prolog (Version 2.5) compilers.
+
+----------------------------------------------------------------------
+(A)		     TYPED PROLOG Program SYNTAX
+----------------------------------------------------------------------
+
+A  Typed Prolog program contains Type DECLARATIONS + PREDICATE DEFINITIONS
+
+
+1. TYPE DECLARATIONS: The BNF syntax of type declarations of the  functions
+and predicates  in Typed-Prolog (as adopted from the Mycroft O'Keefe
+type checker) is as follows: 
+
+1a). <Type-Constructor-Decl> ::== type <Type-Term>.
+
+e.g., 	type int.
+	type arc.	
+
+1b). <Type-Constructor-Decl> ::== type <Type-Term> --> <constr>{; <constr>}.. 
+
+where <Type-Term> denotes a type and <constr> denotes the terms used to
+construct elements of <Type-Term> i.e., Elements of <Type-Term> are 
+constructed using the function symbols of <constr>
+
+e.g., 	type list(T) --> '[]' ; [T|list(A)].
+elements of list(T) are constructed using '|'.
+	
+1c). <Predicate-Symbol-Decl> ::== pred <Pred(Type*)> {; <Pred(Type*)>}
+
+where Pred is a predicate symbol and Type* denotes a tuple of Type-terms.
+
+e.g., 	pred append(list(B),list(B),list(B)).	
+
+Predicate declarations are OPTIONAL and the user can choose 
+to OMIT some or all of them entirely. In this case the reconstruction 
+algorithm would reconstruct the remaining predicate types. 
+
+2. PREDICATE DEFINITIONS: The syntax of predicate definitions 
+(program clauses) is identical to that of Prolog i.e., any syntactically 
+correct Prolog program is acceptable as the predicate definition section of
+a Typed Prolog program.
+
+----------------------------------------------------------------------
+(B) To load and RECONSTRUCT TYPES for a TYPED PROGRAM follow these steps
+----------------------------------------------------------------------
+
+a. ['cr']. loads the type checker(c)/reconstructor(r)
+
+b1. ?- rload. asks for an InputFile that conforms to the  above syntax. 
+The type checker/reconstruction code then loads and TYPE CHECKS the 
+PROGRAM P and RECONSTRUCTS the MISSING TYPES for PREDICATE SYMBOLS.
+
+b2. ?- rload(X) takes as the argument X a file or a list of files 
+and reads/processes a Typed Prolog program from these files.
+
+e.g. rload([libdecls,File1,File2]) can be used to  load the library of type 
+declarations (libdecls) and then load the programs from File1 and File2.
+
+
+	1. TYPE CHECKER: If the program is well-formed with respect to
+		 the type decls then the type checker says "yes" else 
+		it outputs an error message.
+
+	2. TYPE RECONSTRUCT: If Predicate type declarations are missing
+		then the algorithm reconstructs the missing decls.
+		such that the program P is well-formed with respect to 
+		the reconstructed Types.
+
+----------------------------------------------------------------------
+			    OUTPUT FORMAT
+----------------------------------------------------------------------
+
+	The Types and the program are presented as output on the
+	screen as well as on "InputFile.t" i.e. the input file
+	with an extension t.
+
+----------------------------------------------------------------------
+	     A BRIEF DESCRIPTION OF THE FILES IN THIS DIRECTORY
+----------------------------------------------------------------------
+
+1. The following files are loaded by ['cr'].
+  a. io.p :  Top level RLOAD predicate: READS program from file,
+		performs type-check/reconstruction and WRITES the types
+  b. well-formed.p : performs the main TYPE-CHECK/RECONSTRUCTION
+  c. call-table.p : Computes the call-table of each predicate being defined
+  d. adj-list.p : Computes the adjacency list of each predicate  -do-
+  e. order-program.p : Re-orders the clauses so that predicates DEFNS
+		are type checked before their USES.
+  f. aux.p : auxiliary functions used by the type checker.
+  g. lib-decls.p : The Mycroft O'Keefe library of type declarations.
+
+2. The remaining files in this directory are EXAMPLES (ex1 - ex14)
+append, costpath, evenodd, factorial, joxanex, path, permute, reverse.
+
+----------------------------------------------------------------------
+			      REFERENCES
+----------------------------------------------------------------------
+More about TYPED-PROLOG in Reddy90, Reddy91, Reddy-Lakshman91
+Reddy-Lakshman91 is included in this directory in dvi as well as postscript
+format (TypedProlog.dvi and TypedProlog.ps)
+
+@Unpublished{Reddy-Lakshman91,
+  author = 	 "U.S. Reddy and T.K. Lakshman",
+  title = 	 "{Typed Prolog: A Semantic Reconstruction of the 
+                  Mycroft-O'Keefe Type System}",
+  note = 	 "Submitted to the '91 Intl. Logic Programming Symp., San
+		  Deigo, California",
+  OPTcrossref =  "",
+  OPTkey = 	 "",
+  year = 	 "1991",
+  month = 	 "February",
+  OPTannote = 	 ""
+}
+
+@inproceedings{Reddy91,
+	author = "Reddy U. S.",
+	title = "{A perspective on types for logic programs}",
+	booktitle = "{Types in Logic Programs}",
+	editor = "F. Pfenning",
+	year = "1991",
+        note = "(to appear)",
+	publisher = "MIT Press"}
+
+@InCollection{Reddy90,
+	Author = "Reddy, U. S.",
+	Title = "Types for Logic Programs (Abstract)",
+	BookTitle = "Logic Programming: {P}roceedings of the 1990
+		 North American Conference",
+	Pages = "836-840",
+	Editor = "Debray, S. and Hermenegildo, M.",
+	Publisher = "MIT Press",
+	Address = "Cambridge, Mass.",
+	Year = "1990"
+	}
+
+----------------------------------------------------------------------
+ADDRESS CORRESPONDENCE TO:
+
+	T.K. Lakshman
+	Dept. of C.S., DCL,
+	University of Illinois at Urbana Champaign,
+	1304 W Springfield Ave,
+	Urbana, Il 61801.
+	email: lakshman@cs.uiuc.edu
+	PHONE : 217-359-2992	
+	FAX   : 217-333-3501
+----------------------------------------------------------------------
+
+
