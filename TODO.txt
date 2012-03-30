@@ -4,13 +4,19 @@ Ho sistemato l'ossatura di base di evacuazione.pl
 
 E' necessario:
 
--trovato
+-trovato (DONE)
 
 -vicini
 
--mossa?
+-mossa? (DONE, ma da riguardare)
+
+-inserire le clausole per calcolare il costo delle strade
+
+-vedere se e come gestire la strada trafficata
 
 -IMPORTANTE: una user interface che stampi e accetti comandi
+
+-decidere se va inserito nel pred stato anche un int per il numero del movimento (leggere FIXME emacs)
 
 
 Successivamente:
