@@ -11,12 +11,13 @@ E' necessario:
 	in questo modo useremmo quello che hai consigliato tu per collegare direttamente
 	il costo allo stato. Può andare? (DONE in attesa di conferma)
 
+	[Done] Confirmed.
 
 
--vedere se e come gestire la strada trafficata
+
+-vedere se e come gestire la strada trafficata <-- non in fase preliminare.
 
 -IMPORTANTE: una user interface che stampi e accetti comandi
-
 
 
 Successivamente:
@@ -34,4 +35,7 @@ Successivamente:
 				PENSAVO: magari tutte queste cosine si possono fare andando a modificare
 				un euristica e non il costo direttamente??
 				In questo modo potremmo provare a rendere efficiente A*
+	--> idea carina appena ho un attimo vedo se riesco a scrivere qualcosa a riguardo!
+
+	
 
