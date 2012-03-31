@@ -8,11 +8,15 @@ type list(El) -->[];[El|list(El)].
 %per ora ho pensato di mettere solo i nomi incrocio delegando a strada
 %i collegamenti tra incroci e i pesi
 %per ora ho messo solo 6 incroci. Aumentabile a piacere.
+%EDIT: incroci aumentati a 10 per l'esempio!!
 
-type incrocio -->incrocio1;incrocio2;incrocio3;incrocio4;incrocio5;incrocio6.
+type incrocio -->incrocio1;incrocio2;incrocio3;incrocio4;incrocio5;incrocio6;incrocio7;incrocio8;incrocio9;incrocio10.
 
 %tipo strada->st(incrocio,incrocio collegato,peso della strada)
-type strada --> st(incrocio,incrocio,int).
+type strada-->st(incrocio,incrocio,int).
+
+%predicato per grafi NON ORIENTATI!!)
+st(X,Y,P):-st(Y,X,P).
 
 %il tipo stato definisce la posizione sugli incroci di OGNI gruppo
 %provvisorio: solo un gruppo!!
@@ -63,4 +67,29 @@ vicini(_Stat,[]).
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                %
+%						 %
+%      Esempio Semplice:10 Nodi 1 Gruppo	 %
+%                                                %
+%                                                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+in(incrocio1,0). %stato di partenza
+
+sicuro(incrocio9).
+
+st(incrocio1,incrocio2,5).
+st(incrocio1,incrocio3,6).
+st(incrocio1,incrocio4,1).
+st(incrocio1,incrocio5,8).
+st(incrocio2,incrocio5,4).
+st(incrocio3,incrocio6,5).
+st(incrocio4,incrocio3,8).
+st(incrocio5,incrocio7,3).
+st(incrocio6,incrocio7,2).
+st(incrocio6,incrocio8,5).
+st(incrocio7,incrocio10,3).
+st(incrocio8,incrocio9,2). %nel pdf ho dimenticato il 2, will fix it
+st(incrocio10,incrocio9,1).
