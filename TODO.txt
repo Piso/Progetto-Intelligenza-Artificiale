@@ -7,6 +7,7 @@ Aggiornato il 31-03-2012 18:13
 E' necessario:
 
 DUBBIO IMMANE:E' necessario scrivere un pred costo? Se gli algoritmi di ricerca si basano su un pred costo dobbiamo farlo!! Comunque sia basterebbe fare un wrapper del costo che hai implementato tu restituendo il costo dello stato e dovrebbe andare. Che dici? Comunque ora guardo il best first e l'A* di ornaghi e poi torno qui ed edito!!
+EDIT: Ho cercato nell'esempio dei robottini ed effettivamente c'è il pred costo nel file search. appena ho tempo aggiungo tutto alla cartella esempi!
 
 -IMPORTANTE!!!->definire agibile, altrimenti per le regole del prolog tutte le strade non sono agibili se non viene specificato altrimenti.
 
