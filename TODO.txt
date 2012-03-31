@@ -4,19 +4,26 @@ Ho sistemato l'ossatura di base di evacuazione.pl
 
 E' necessario:
 
--definire una mappa (o validare quella iniziale sul pdf) per testare un esempio semplice
+
+-capire cosa sia lo stato di partenza: Io direi che si possa scrivere come in(nodo_partenza,0)
+	in questo modo useremmo quello che hai consigliato tu per collegare direttamente
+	il costo allo stato. Può andare?
+
 
 -trovato (DONE)ok
 
 -vicini (da controllare bene)
+		vicini dovrebbe andare, forse quello sul goal non serve ma non dovrebbe far danni!! ^^
 
 -mossa? (DONE,riguardata per ora è ok)- inserito peso.
+		riguardata con peso, dovrebbe andare!!
 
 -inserire le clausole per calcolare il costo delle strade
 
 -vedere se e come gestire la strada trafficata
 
 -IMPORTANTE: una user interface che stampi e accetti comandi
+
 
 
 Successivamente:
@@ -31,4 +38,7 @@ Successivamente:
 		-strada agibile
 		-vento
 		-ecc...
+				PENSAVO: magari tutte queste cosine si possono fare andando a modificare
+				un euristica e non il costo direttamente??
+				In questo modo potremmo provare a rendere efficiente A*
 

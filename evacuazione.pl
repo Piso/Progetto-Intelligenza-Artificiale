@@ -21,7 +21,7 @@ type strada --> st(incrocio,incrocio,int).
 %Si potrebbe calcolare direttamente il costo senza il turno sommando ad
 %ogni turno il peso della strada percorsa.
 %es: type stato -->in(incrocio,int). -> guarda mossa per la modifica
-type stato -->in(incrocio).
+type stato -->in(incrocio,int).
 
 pred sicuro(incrocio).
 
@@ -35,7 +35,18 @@ pred trafficata(strada).
 
 type mossa --> m(stato,stato,strada).
 
+%Mossa non so se e' corretto (controllare unificazione road=
+%mossa(in(Inc1),in(Inc2),Road):- Road=st(Inc1,Inc2,_),agibile(Road).
+%modifica con somma del costo:
+m(in(Inc1,K),in(Inc2,K1),Road):-Road=st(Inc1,Inc2,P),agibile(Road),K1 is K+P.
+
+%nice, dovrebbe andare bene!
+
+
 pred trovato(stato).
+
+trovato(in(Inc1)):-sicuro(Inc1).
+
 
 % L è la lista dei "vicini di L"
 % (incroci collegati ad L da una strada)
@@ -47,16 +58,9 @@ vicini(Stat,[]) :- trovato(Stat), !.
 %sicuro che ci voglia il vicini sul trovato? Horni non l'ha mai
 %fatto in classe,però mi fido! ^^
 
-vicini(Stat,L) :-  setof(S1, m(Stat,S1,_),L), !. %&; L=[].
+vicini(Stat,L) :- setof(S1, m(Stat,S1,_),L), !. %&; L=[].
 vicini(_Stat,[]).
 
 
 
-trovato(in(Inc1)):-sicuro(Inc1).
 
-%Mossa non so se e' corretto (controllare unificazione road=
-%mossa(in(Inc1),in(Inc2),Road):- Road=st(Inc1,Inc2,_),agibile(Road).
-%modifica con somma del costo:
-m(in(Inc1,K),in(Inc2,K1),Road):-Road=st(Inc1,Inc2,P),agibile(Road),K1 is K+P.
-
-%nice, dovrebbe andare bene!
