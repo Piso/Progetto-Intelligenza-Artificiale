@@ -4,21 +4,14 @@ Ho sistemato l'ossatura di base di evacuazione.pl
 
 E' necessario:
 
+-IMPORTANTE!!!->definire agibile, altrimenti per le regole del prolog tutte le strade non sono agibili se non viene specificato altrimenti.
+
 
 -capire cosa sia lo stato di partenza: Io direi che si possa scrivere come in(nodo_partenza,0)
 	in questo modo useremmo quello che hai consigliato tu per collegare direttamente
-	il costo allo stato. Può andare?
+	il costo allo stato. Può andare? (DONE in attesa di conferma)
 
 
--trovato (DONE)ok
-
--vicini (da controllare bene)
-		vicini dovrebbe andare, forse quello sul goal non serve ma non dovrebbe far danni!! ^^
-
--mossa? (DONE,riguardata per ora è ok)- inserito peso.
-		riguardata con peso, dovrebbe andare!!
-
--inserire le clausole per calcolare il costo delle strade
 
 -vedere se e come gestire la strada trafficata
 
