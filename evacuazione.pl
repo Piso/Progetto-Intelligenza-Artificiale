@@ -33,17 +33,26 @@ pred agibile(strada).
 %pericolo.
 pred trafficata(strada).
 
+pred mossa(stato,stato,strada).
 
 pred trovato(stato).
 
-pred mossa(stato,stato,strada).
+% L è la lista dei "vicini di L"
+% (incroci collegati ad L da una strada)
+pred vicini(stato, list(stato)).
+
+%sicuramente da ricontrollare i vicini qui sotto. Se necessario
+%inserire anche gli altri vincoli (gruppi o constraint)
+vicini(Stat,[]) :- trovato(Stat), !.
+vicini(Stat,L) :-  setof(S1, mossa(Stat,S1,_),L), !; L=[].
+
+
 
 trovato(in(Inc1)):-sicuro(Inc1).
 
 %Mossa non so se e' corretto (controllare unificazione road=
 %sicuramente e' incompleto perchè mancano tutte le info relative a costo
-mossa(in(Inc1),in(Inc2),Road):- Road=st(Inc1,Inc2,_),agibile(Road).
+%mossa(in(Inc1),in(Inc2),Road):- Road=st(Inc1,Inc2,_),agibile(Road).
 %modifica con somma del costo:
-% mossa(in(Inc1,K),in(Inc2,K1),Road):-
-% Road=st(Inc1,Inc2,P),agibile(Road),K1 is K+P.
-%
+mossa(in(Inc1,K),in(Inc2,K1),Road):-Road=st(Inc1,Inc2,P),agibile(Road),K1 is K+P.
+
