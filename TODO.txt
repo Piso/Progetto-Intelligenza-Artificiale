@@ -1,37 +1,34 @@
-Aggiornato il 31-03-2012 12:48
+Aggiornato il 31-03-2012 18:13
 
-Ho sistemato l'ossatura di base di evacuazione.pl
+
+
+
 
 E' necessario:
+
+DUBBIO IMMANE:E' necessario scrivere un pred costo? Se gli algoritmi di ricerca si basano su un pred costo dobbiamo farlo!! Comunque sia basterebbe fare un wrapper del costo che hai implementato tu restituendo il costo dello stato e dovrebbe andare. Che dici? Comunque ora guardo il best first e l'A* di ornaghi e poi torno qui ed edito!!
 
 -IMPORTANTE!!!->definire agibile, altrimenti per le regole del prolog tutte le strade non sono agibili se non viene specificato altrimenti.
 
 
--capire cosa sia lo stato di partenza: Io direi che si possa scrivere come in(nodo_partenza,0)
-	in questo modo useremmo quello che hai consigliato tu per collegare direttamente
-	il costo allo stato. Può andare? (DONE in attesa di conferma)
-
-	[Done] Confirmed.
-
-
-
--vedere se e come gestire la strada trafficata <-- non in fase preliminare.
 
 -IMPORTANTE: una user interface che stampi e accetti comandi
 
 
 Successivamente:
 
--vedere di integrare gli algoritmi di ricerca
+	-vedere se e come gestire la strada trafficata <-- non in fase preliminare. %allora la sposto nei successivamente
 
--rendere più complicato il tutto
-	-più punti di partenza
-	-più punti di arrivo
-	-molti più incroci
-	-condizioni di restrizione
-		-strada agibile
-		-vento
-		-ecc...
+	-vedere di integrare gli algoritmi di ricerca
+
+	-rendere più complicato il tutto
+		-più punti di partenza
+		-più punti di arrivo
+		-molti più incroci
+		-condizioni di restrizione
+			-strada agibile
+			-vento
+			-ecc...
 				PENSAVO: magari tutte queste cosine si possono fare andando a modificare
 				un euristica e non il costo direttamente??
 				In questo modo potremmo provare a rendere efficiente A*
