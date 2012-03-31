@@ -18,9 +18,6 @@ type strada --> st(incrocio,incrocio,int).
 %provvisorio: solo un gruppo!!
 %FIXME: bisogna inserire un' info anche riguardante il numero
 %del "turno di movimento"? forse serve x costo!!
-%Si potrebbe calcolare direttamente il costo senza il turno sommando ad
-%ogni turno il peso della strada percorsa.
-%es: type stato -->in(incrocio,int). -> guarda mossa per la modifica
 type stato -->in(incrocio).
 
 pred sicuro(incrocio).
@@ -28,9 +25,6 @@ pred sicuro(incrocio).
 pred agibile(strada).
 
 %il predicato trafficata non so se sia necessario
-%potrebbe non essere necessario nel caso in cui utilizzassimo la
-%definizione di agibile(strada):-incrocio destinaz. libero e non c'è
-%pericolo.
 pred trafficata(strada).
 
 
@@ -43,7 +37,3 @@ trovato(in(Inc1)):-sicuro(Inc1).
 %Mossa non so se e' corretto (controllare unificazione road=
 %sicuramente e' incompleto perchè mancano tutte le info relative a costo
 mossa(in(Inc1),in(Inc2),Road):- Road=st(Inc1,Inc2,_),agibile(Road).
-%modifica con somma del costo:
-% mossa(in(Inc1,K),in(Inc2,K1),Road):-
-% Road=st(Inc1,Inc2,P),agibile(Road),K1 is K+P.
-%
