@@ -1,7 +1,7 @@
 % Seconda versione del progetto di Intelligenza artificiale
 % Cambiamenti nella gestione del costo
 % PROVA:usare 2 gruppi al posto di 1
-%
+% In questo modo abbiamo il costo, ma non vanno più bene i vicini!
 :- use_module('types/chk').
 
 :- no_check(setof(_,_,_)).
@@ -37,9 +37,9 @@ st(X,Y,P):-st(Y,X,P).
 pred trafficata(strada).
 
 
-%Le prime mosse da considerare sono quelle in cui uno dei due gruppi
-%e' al sicuro, queste mosse hanno priorità più alta in quanto
-%sono meno generali
+% Le prime mosse da considerare sono quelle in cui uno dei due gruppi
+% e' al sicuro, queste mosse hanno priorità più alta in quanto
+% sono meno generali
 %
 m(in(Inc1,Inc2),in(Inc1,Inc3),_,Road):-sicuro(Inc1),Road=st(Inc2,Inc3,_),agibile(Road),!.
 m(in(Inc1,Inc2),in(Inc3,Inc2),Road,_):-sicuro(Inc2),Road=st(Inc1,Inc3,_),agibile(Road),!.
@@ -49,6 +49,8 @@ m(in(Inc1,Inc2),in(Inc3,Inc4),Road1,Road2):-Road1=st(Inc1,Inc3,_),
 	Road2=st(Inc2,Inc4,_),agibile(Road1),agibile(Road2).
 
 
+costo(m(in(X,Y),in(Q,Y),st(X,Q,C1),_,),C) :- C is C1,!.
+costo(m(in(X,Y),in(X,Z),_,st(Y,Z,C2)),C) :- C is C2,!.
 costo(m(in(X,Y),in(Q,Z),st(X,Q,C1),st(Y,Z,C2)),C):- C is C1+C2.
 
 
@@ -67,7 +69,7 @@ vicini(Stat,[]) :- trovato(Stat), !.
 % sicuro che ci voglia il vicini sul trovato? Horni non l'ha mai
 % fatto in classe,però mi fido! ^^
 
-vicini(Stat,L) :- setof(S1, m(Stat,S1,_),L), !. % ; L=[].
+vicini(Stat,L) :- setof(S1, m(Stat,S1,_,_),L), !. % ; L=[].
 vicini(_Stat,[]).
 
 
