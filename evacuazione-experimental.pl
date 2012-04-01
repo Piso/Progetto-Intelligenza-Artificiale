@@ -1,35 +1,34 @@
-% Prima versione del progetto di Intelligenza artificiale
-%
+% Seconda versione del progetto di Intelligenza artificiale
+% Cambiamenti nella gestione del costo
+% PROVA:usare 2 gruppi al posto di 1
+% In questo modo abbiamo il costo, ma non vanno più bene i vicini!
 :- use_module('types/chk').
+
+:- no_check(setof(_,_,_)).
 
 % classico tipo liste
 type list(El) -->[];[El|list(El)].
 
-% per ora ho pensato di mettere solo i nomi incrocio delegando a strada
-% i collegamenti tra incroci e i pesi
-% per ora ho messo solo 6 incroci. Aumentabile a piacere.
-% EDIT: incroci aumentati a 10 per l'esempio!!
-
 type incrocio -->incrocio1;incrocio2;incrocio3;incrocio4;incrocio5;incrocio6;incrocio7;incrocio8;incrocio9;incrocio10.
 
 % tipo strada->st(incrocio,incrocio collegato,peso della strada)
-type strada-->st(incrocio,incrocio,int).
+type strada--> st(incrocio,incrocio,int).
 
-% predicato per grafi NON ORIENTATI!!)
-st(X,Y,P):-st(Y,X,P).
+type mossa --> m(stato,stato,strada,strada).
 
-% il tipo stato definisce la posizione sugli incroci di OGNI gruppo
-% provvisorio: solo un gruppo!!
-% FIXME: bisogna inserire un' info anche riguardante il numero
-% del "turno di movimento"? forse serve x costo!!
-% Si potrebbe calcolare direttamente il costo senza il turno sommando ad
-% ogni turno il peso della strada percorsa.
-% es: type stato -->in(incrocio,int). -> guarda mossa per la modifica
-type stato -->in(incrocio,int).
+
+% lo stato adesso non incorpora più la somma dei costi (provv.)
+type stato -->in(incrocio,incrocio).
 
 pred sicuro(incrocio).
 
 pred agibile(strada).
+
+pred costo(mossa,int).
+
+% predicato per grafi NON ORIENTATI!!)
+st(X,Y,P):-st(Y,X,P).
+
 
 % il predicato trafficata non so se sia necessario
 % potrebbe non essere necessario nel caso in cui utilizzassimo la
@@ -37,14 +36,20 @@ pred agibile(strada).
 % pericolo.
 pred trafficata(strada).
 
-type mossa --> m(stato,stato,strada).
 
-% Mossa non so se e' corretto (controllare unificazione road=
-% mossa(in(Inc1),in(Inc2),Road):- Road=st(Inc1,Inc2,_),agibile(Road).
-% modifica con somma del costo:
-m(in(Inc1,K),in(Inc2,K1),Road):-Road=st(Inc1,Inc2,P),agibile(Road),K1 is K+P.
+%Le prime mosse da considerare sono quelle in cui uno dei due gruppi
+%e' al sicuro, queste mosse hanno priorità più alta in quanto
+%sono meno generali
+%
+m(in(Inc1,Inc2),in(Inc1,Inc3),_,Road):-sicuro(Inc1),Road=st(Inc2,Inc3,_),agibile(Road),!.
+m(in(Inc1,Inc2),in(Inc3,Inc2),Road,_):-sicuro(Inc2),Road=st(Inc1,Inc3,_),agibile(Road),!.
 
-% nice, dovrebbe andare bene!
+
+m(in(Inc1,Inc2),in(Inc3,Inc4),Road1,Road2):-Road1=st(Inc1,Inc3,_),
+	Road2=st(Inc2,Inc4,_),agibile(Road1),agibile(Road2).
+
+
+costo(m(in(X,Y),in(Q,Z),st(X,Q,C1),st(Y,Z,C2)),C):- C is C1+C2.
 
 
 pred trovato(stato).
@@ -69,8 +74,8 @@ vicini(_Stat,[]).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                %
-%						 						 %
-%      Esempio Semplice:10 Nodi 1 Gruppo	     %
+%						 %
+%      Esempio Semplice:10 Nodi 1 Gruppo	 %
 %                                                %
 %                                                %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
