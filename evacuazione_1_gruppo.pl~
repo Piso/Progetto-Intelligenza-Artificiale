@@ -1,6 +1,8 @@
 % Prima versione MODIFICATA del progetto di Intelligenza artificiale
 %
 :- use_module('types/chk').
+:- no_check(setof(_,_,_)).
+
 
 type list(El) -->[];[El|list(El)].
 
