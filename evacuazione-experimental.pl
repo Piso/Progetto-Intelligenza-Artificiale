@@ -54,11 +54,6 @@ m(in(Inc1,Inc2),in(Inc3,Inc4),Road1,Road2):-Road1=st(Inc1,Inc3,_),
 %costo(m(in(X,Y),in(X,Z),_,st(Y,Z,C2)),C) :- C is C2,!.
 %costo(m(in(X,Y),in(Q,Z),st(X,Q,C1),st(Y,Z,C2)),C):- C is C1+C2.
 
-%type strada--> st(incrocio,incrocio,int).
-
-%type mossa --> m(stato,stato,strada,strada).
-%type stato -->in(incrocio,incrocio).
-
 costo(in(X,Y),in(Q,Y),C):-sicuro(Y),st(X,Q,C1),C is C1,!.
 costo(in(X,Y),in(X,Z),C):-sicuro(X),st(Y,Z,C2),C is C2,!.
 costo(in(X,Y),in(Q,Z),C):-st(X,Q,C1),st(Y,Z,C2),C is C1+C2.
