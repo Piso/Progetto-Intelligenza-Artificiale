@@ -3,6 +3,9 @@
 :- use_module('types/chk').
 :- no_check(setof(_,_,_)).
 :- consult(best_first).
+:- consult(search).
+
+
 
 
 type list(El) -->[];[El|list(El)].
@@ -11,11 +14,11 @@ type incrocio -->incrocio1;incrocio2;incrocio3;incrocio4;incrocio5;incrocio6;inc
 
 type strada-->st(incrocio,incrocio,int).
 
-st(X,Y,P):-st(Y,X,P).
+%st(X,Y,P):-st(Y,X,P).
 
 type nodo -->in(incrocio).
 
-type mossa --> m(nodo,nodo,strada).
+%type mossa --> m(nodo,nodo,strada).
 
 pred sicuro(incrocio).
 
@@ -25,7 +28,12 @@ pred trafficata(strada).
 
 pred costo(nodo,nodo,int).
 
-m(in(Inc1),in(Inc3),Road1):-Road1=st(Inc1,Inc3,_),agibile(Road1).
+pred mossa(nodo,nodo,strada).
+
+%m(in(Inc1),in(Inc3),st(Inc1,Inc3,_)).%:-agibile(st(Inc1,Inc3,_)).
+%
+mossa(in(Inc1),in(Inc3),st(Inc1,Inc3,_)).
+
 costo(in(X),in(Q),C):-st(X,Q,C1),C is C1.
 
 
@@ -33,8 +41,12 @@ costo(in(X),in(Q),C):-st(X,Q,C1),C is C1.
 
 pred trovato(nodo).
 
+pred eq(nodo,nodo).
+
+eq(in(X),in(X)).
+
 trovato(in(Inc1)):-sicuro(Inc1).
-(St
+
 
 % L è la lista dei "vicini di L"
 % (incroci collegati ad L da una strada)
@@ -42,12 +54,14 @@ pred vicini(nodo, list(stato)).
 
 % sicuramente da ricontrollare i vicini qui sotto. Se necessario
 % inserire anche gli altri vincoli (gruppi o constraint)
-vicini(Stat,[]) :- trovato(Stat), !.
+%vicini(Stat,[]) :- trovato(Stat), !.
 % sicuro che ci voglia il vicini sul trovato? Horni non l'ha mai
 % fatto in classe,però mi fido! ^^
 
-vicini(Stat,L) :- setof(S1, m(Stat,S1,_),L), !. % ; L=[].
-vicini(_Stat,[]).
+vicini(Stat,L) :- setof(S1, mossa(Stat,S1,_),L), ! ; L=[].
+%vicini(Stat,[]) :- trovato(Stat), !.
+%vicini(_Stat,[]).
+
 
 
 
@@ -60,10 +74,11 @@ vicini(_Stat,[]).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-in(incrocio1). %stato di partenza
+% in(incrocio1). %stato di partenza
 
 sicuro(incrocio9).
-
+%sicuro(incrocio1).
+%agibile(st(_,_,_)).
 st(incrocio1,incrocio2,5).
 st(incrocio1,incrocio3,6).
 st(incrocio1,incrocio4,1).

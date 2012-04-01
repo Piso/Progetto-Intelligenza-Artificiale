@@ -1,6 +1,6 @@
 % Prima versione del progetto di Intelligenza artificiale
 %
-:- use_module('types/chk').
+:-  --
 
 % classico tipo liste
 type list(El) -->[];[El|list(El)].
