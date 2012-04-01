@@ -24,7 +24,9 @@ pred sicuro(incrocio).
 
 pred agibile(strada).
 
-pred costo(mossa,int).
+% pred costo(mossa,int).
+% 
+pred costo(stato,stato,int).
 
 % predicato per grafi NON ORIENTATI!!)
 st(X,Y,P):-st(Y,X,P).
@@ -44,19 +46,26 @@ pred trafficata(strada).
 m(in(Inc1,Inc2),in(Inc1,Inc3),_,Road):-sicuro(Inc1),Road=st(Inc2,Inc3,_),agibile(Road),!.
 m(in(Inc1,Inc2),in(Inc3,Inc2),Road,_):-sicuro(Inc2),Road=st(Inc1,Inc3,_),agibile(Road),!.
 
-
 m(in(Inc1,Inc2),in(Inc3,Inc4),Road1,Road2):-Road1=st(Inc1,Inc3,_),
 	Road2=st(Inc2,Inc4,_),agibile(Road1),agibile(Road2).
 
 
-costo(m(in(X,Y),in(Q,Y),st(X,Q,C1),_,),C) :- C is C1,!.
-costo(m(in(X,Y),in(X,Z),_,st(Y,Z,C2)),C) :- C is C2,!.
-costo(m(in(X,Y),in(Q,Z),st(X,Q,C1),st(Y,Z,C2)),C):- C is C1+C2.
+%costo(m(in(X,Y),in(Q,Y),st(X,Q,C1),_),C) :- C is C1,!.
+%costo(m(in(X,Y),in(X,Z),_,st(Y,Z,C2)),C) :- C is C2,!.
+%costo(m(in(X,Y),in(Q,Z),st(X,Q,C1),st(Y,Z,C2)),C):- C is C1+C2.
 
+%type strada--> st(incrocio,incrocio,int).
+
+%type mossa --> m(stato,stato,strada,strada).
+%type stato -->in(incrocio,incrocio).
+
+
+costo(in(X,Y),I
+costo(in(X,Y),in(Q,Z),C):-st(X,Q,C1),st(Y,Z,C2),C is C1+C2.
 
 pred trovato(stato).
 
-trovato(in(Inc1)):-sicuro(Inc1).
+trovato(in(Inc1),in(Inc2)):-sicuro(Inc1),sicuro(Inc2).
 
 
 % L è la lista dei "vicini di L"
@@ -83,7 +92,7 @@ vicini(_Stat,[]).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-in(incrocio1,0). %stato di partenza
+in(incrocio1,incrocio4). %stato di partenza
 
 sicuro(incrocio9).
 
