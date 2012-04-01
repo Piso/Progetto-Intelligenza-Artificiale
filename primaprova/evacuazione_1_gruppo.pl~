@@ -51,6 +51,7 @@ vicini(_Stat,[]).
 
 
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                %
 %						 %
@@ -60,10 +61,10 @@ vicini(_Stat,[]).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-in(incrocio1). %stato di partenza
+% in(incrocio1). %stato di partenza
 
 sicuro(incrocio9).
-
+agibile(_).
 st(incrocio1,incrocio2,5).
 st(incrocio1,incrocio3,6).
 st(incrocio1,incrocio4,1).

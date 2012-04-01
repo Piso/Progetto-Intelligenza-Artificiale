@@ -33,6 +33,10 @@ costo(in(X),in(Q),C):-st(X,Q,C1),C is C1.
 
 pred trovato(nodo).
 
+pred eq(nodo,nodo).
+
+eq(in(X),in(X)).
+
 trovato(in(Inc1)):-sicuro(Inc1).
 
 
@@ -51,6 +55,7 @@ vicini(_Stat,[]).
 
 
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                %
 %						 %
@@ -60,10 +65,10 @@ vicini(_Stat,[]).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-in(incrocio1). %stato di partenza
+% in(incrocio1). %stato di partenza
 
 sicuro(incrocio9).
-
+agibile(_).
 st(incrocio1,incrocio2,5).
 st(incrocio1,incrocio3,6).
 st(incrocio1,incrocio4,1).

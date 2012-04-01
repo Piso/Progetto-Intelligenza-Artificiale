@@ -12,9 +12,9 @@ type strada-->st(incrocio,incrocio,int).
 
 st(X,Y,P):-st(Y,X,P).
 
-type stato -->in(incrocio).
+type nodo -->in(incrocio).
 
-type mossa --> m(stato,stato,strada).
+type mossa --> m(nodo,nodo,strada).
 
 pred sicuro(incrocio).
 
@@ -22,7 +22,7 @@ pred agibile(strada).
 
 pred trafficata(strada).
 
-pred costo(stato,stato,int).
+pred costo(nodo,nodo,int).
 
 m(in(Inc1),in(Inc3),Road1):-Road1=st(Inc1,Inc3,_),agibile(Road1).
 costo(in(X),in(Q),C):-st(X,Q,C1),C is C1.
@@ -30,14 +30,14 @@ costo(in(X),in(Q),C):-st(X,Q,C1),C is C1.
 
 
 
-pred trovato(stato).
+pred trovato(nodo).
 
 trovato(in(Inc1)):-sicuro(Inc1).
 
 
 % L è la lista dei "vicini di L"
 % (incroci collegati ad L da una strada)
-pred vicini(stato, list(stato)).
+pred vicini(nodo, list(stato)).
 
 % sicuramente da ricontrollare i vicini qui sotto. Se necessario
 % inserire anche gli altri vincoli (gruppi o constraint)
