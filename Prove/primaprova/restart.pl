@@ -4,7 +4,7 @@
 % per ora pochi nodi.
 %
 :-use_module('types/chk').
-:-consult(breadth).
+:-consult(best_first).
 
 type list(El) -->[]; [El|list(El)].
 type incrocio --> inc1,inc2,inc3,inc4,inc5,inc6,inc7,inc8,inc9,inc10.
@@ -20,7 +20,8 @@ pred mossa(stato,stato).
 pred vicini(stato,list(stato)).
 pred agibile(incrocio,incrocio).
 pred pericolo(incrocio).
-%connesso(X,Y):-connesso(Y,X).
+pred eq(stato,stato).
+connesso(X,Y,P):-connesso(Y,X,P).
 %
 agibile(X,Y):-connesso(X,Y,_),not(pericolo(Y)).
 %mossa(in(X,Z),in(X,Q)):-sicuro(X),connesso(Z,Q,_),!.
@@ -43,6 +44,8 @@ costo(in(X,Z),in(X,Q),C):-connesso(Z,Q,C),!.
 costo(in(X,Z),in(Y,Z),C):-connesso(X,Y,C),!.
 costo(in(X,Z),in(Y,Q),C):-connesso(X,Y,C1),connesso(Z,Q,C2),C is C1 + C2.
 
+eq(in(X,Y),in(Y,X)).
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 sicuro(inc9).
@@ -63,10 +66,6 @@ connesso(inc6,inc8,5).
 connesso(inc7,inc10,3).
 connesso(inc8,inc9,2).
 connesso(inc10,inc9,1).
-
-
-
-
 
 
 
