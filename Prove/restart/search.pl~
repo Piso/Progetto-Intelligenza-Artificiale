@@ -82,10 +82,10 @@ solve(N,G) :-
 cerca(Frontiera, nc(PN, Path, Cost)) :-
        scelto(nc(PN, Path, Cost),Frontiera,_),
        trovato(PN),                      % dal problema
-       (   showflag -> mostra(Frontiera),comandi; true).
+       (   showflag -> mostra(Frontiera),command; true).
 
 cerca(Frontiera, Goal) :-
-	(   showflag -> mostra(Frontiera),comandi; true),
+	(   showflag -> mostra(Frontiera),command; true),
         scelto(nc(N,Path,Cost),Frontiera,F1),	 % dalla strategia
         vicini(N,Vicini),		 % dal problema
         trasforma(Vicini,nc(N,Path,Cost),FrontieraVicini),
