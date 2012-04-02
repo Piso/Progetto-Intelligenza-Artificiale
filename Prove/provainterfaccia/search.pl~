@@ -56,7 +56,7 @@ pred taglia_cicli(stato, list(stato)).
 
 %% PREDICATI DEFINITI DAL PROGRAMMA
 
-pred solve(stato, nodo).
+%pred solve(stato, nodo).
   % solve(+Start,nc(-Goal,-Path,-Cost)) is nondet:   da Start si raggiunge
   %    Goal appraverso il cammino Path con costo Cost; Goal e' una
   %    soluzione
@@ -74,18 +74,17 @@ pred trasforma(list(stato),nodo,list(nodo)).
 
 :- consult(interfaccia).
 
-
 solve(N,G) :-
       frontiera_iniziale(nc(N,[],0),F0),
       cerca(F0,G).
 
 cerca(Frontiera, nc(PN, Path, Cost)) :-
        scelto(nc(PN, Path, Cost),Frontiera,_),
-       trovato(PN). %,                      % dal problema
-     %  (   showflag -> mostra(Frontiera),comandi; true).
+       trovato(PN),                      % dal problema
+       (   showflag -> mostra(Frontiera),comandi; true).
 
 cerca(Frontiera, Goal) :-
-%	(   showflag -> mostra(Frontiera),comandi; true),
+	(   showflag -> mostra(Frontiera),comandi; true),
         scelto(nc(N,Path,Cost),Frontiera,F1),	 % dalla strategia
         vicini(N,Vicini),		 % dal problema
         trasforma(Vicini,nc(N,Path,Cost),FrontieraVicini),

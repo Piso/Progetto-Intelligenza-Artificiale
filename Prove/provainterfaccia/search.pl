@@ -74,7 +74,6 @@ pred trasforma(list(stato),nodo,list(nodo)).
 
 :- consult(interfaccia).
 
-
 solve(N,G) :-
       frontiera_iniziale(nc(N,[],0),F0),
       cerca(F0,G).

@@ -1,5 +1,5 @@
 :- use_module('types/chk').
-:- consult(search).
+:- consult('search').
 
 type list(E) --> []; [E | list(E)].
 type frontiera --> dl(list(nodo),list(nodo)).

@@ -5,31 +5,50 @@
 %
 :-dynamic(showflag/0).
 
+% type float --> 0; 1; float + float; float-float; float/float; float *
+% float.
 
-:-writeln('Inizio Programma. Caricamento esecuzione interfaccia.').
-:-writeln('Comandi:  load_problem(+F:nome_file), solve, show, noshow\n\n').
+%type stato.
 
-solve(_,Y):-trovato(Y).
+%type nodo--> nc(stato,list(stato),float).
+%
 
 load_problem(F) :-consult(F).
-show :-	writeln('Esecuzione in Corso.'),
-	listaComandi.
-listaComandi:-writeln('Comandi: r: solve(X,Y); h:help').
+%:-consult(restart). errato.
+%load_problem(restart).
 
+:-writeln('Inizio Programma. Esecuzione interfaccia.').
+:-writeln('Comandi: r:solve(X,Y); h:help; a:esci').
+
+%%pred solve(stato,nodo).
+
+%show:-writeln('Esecuzione in Corso.'),listaComandi.
+
+listaComandi:-assert(showflag),writeln('Comandi: r:solve(X,Y); h:help; a:esci').
+
+%risolvi(_,_):-solve(_,_).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%creaIncrocio(X):-(
+	%      X = [HEAD|.], X = HEAD,display(HEAD);
+	 %     true
+	  %    ).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 comandi :- readln(F),
 	(
-	F = [], !;
-	F = [r|_],
+	F = [],!,comandi;
+	F = [r|_],!,
 	    write('Inserisci stato di partenza gruppo1: '),
 	    readln(X),
 	    write('Inserisci stato di partenza gruppo2: '),
-	    readln(Y),solve(in(X,Y),Z),
-	    write('. Computazione Terminata.');
+	    readln(Y),solve((in(X,Y)),_),
+	    writeln('. Computazione Terminata.'),comandi;
 	F = [h|_],!,listaComandi,comandi;
 	F = [a|_],!,abort;
 	true
 	).
+
+%:-comandi.
 
 
 
