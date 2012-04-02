@@ -34,5 +34,7 @@ costo(in(X),in(Y),C):-connesso(X,Y,C).
 sicuro(inc4).
 
 connesso(inc1,inc2,2).
+connesso(inc1,inc5,1).
+connesso(inc5,inc4,1).
 connesso(inc2,inc3,2).
 connesso(inc3,inc4,2).
