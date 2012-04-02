@@ -32,6 +32,7 @@ listaComandi:-assert(showflag),writeln('Comandi: r:solve(X,Y); h:help; a:esci').
 	 %     true
 	  %    ).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+creaSoluzione:-display(solve((in(X,Y)),_)).
 
 comandi :- readln(F),
 	(
@@ -40,7 +41,7 @@ comandi :- readln(F),
 	    write('Inserisci stato di partenza gruppo1: '),
 	    readln(X),
 	    write('Inserisci stato di partenza gruppo2: '),
-	    readln(Y),solve((in(X,Y)),_),
+	    readln(Y),creaSoluzione,
 	    writeln('. Computazione Terminata.'),comandi;
 	F = [h|_],!,listaComandi,comandi;
 	F = [a|_],!,abort;
