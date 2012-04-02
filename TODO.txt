@@ -1,26 +1,23 @@
-Aggiornato il 31-03-2012 18:13
-
-
-
-
+Aggiornato il 02-04-2012 14:40
 
 E' necessario:
 
 DUBBIO IMMANE:E' necessario scrivere un pred costo? Se gli algoritmi di ricerca si basano su un pred costo dobbiamo farlo!! Comunque sia basterebbe fare un wrapper del costo che hai implementato tu restituendo il costo dello stato e dovrebbe andare. Che dici? Comunque ora guardo il best first e l'A* di ornaghi e poi torno qui ed edito!!
 EDIT: Ho cercato nell'esempio dei robottini ed effettivamente c'è il pred costo nel file search. appena ho tempo aggiungo tutto alla cartella esempi!
+REEDIT: come visto ieri dovremmo esserci sui file necessari, con la ricerca forza bruta di una soluzione avevamo almeno capito che file ci servivano e quindi quali predicati si andavano a pescare!
 
 -IMPORTANTE!!!->definire agibile, altrimenti per le regole del prolog tutte le strade non sono agibili se non viene specificato altrimenti.
-
+EDIT:Nel pomeriggio ci occupiamo di testarlo aggiungendo i constraint vari, partendo da agibile.
 
 
 -IMPORTANTE: una user interface che stampi e accetti comandi
-
+->tenendo conto che non ho la più pallida idea di come si faccia, partendo dalla base dei progetti esistenti possiamo inventarci qualcosa. Ho anche un'idea carina per far sì che il programma risponda frasi decenti e non con il suo formato illeggibile, ma ci vorrà un bel pò, quindi preferirei finire il progetto così e poi vedere di dargli un aspetto decente.
 
 Successivamente:
 
 	-vedere se e come gestire la strada trafficata <-- non in fase preliminare. %allora la sposto nei successivamente
 
-	-vedere di integrare gli algoritmi di ricerca
+	-vedere di integrare gli algoritmi di ricerca --> Dobbiamo sceglierne uno...facciamo dei test con i tempi come su "ambulanze"? (ovviamente dopo aver aggiunto i constraint.
 
 	-rendere più complicato il tutto
 		-più punti di partenza
