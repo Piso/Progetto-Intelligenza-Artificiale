@@ -11,7 +11,7 @@ type incrocio -->incrocio1;incrocio2;incrocio3;incrocio4;incrocio5;incrocio6;inc
 
 type strada-->st(incrocio,incrocio,int).
 
-st(X,Y,P):-st(Y,X,P).
+%st(X,Y,P):-st(Y,X,P).
 
 type nodo -->in(incrocio).
 
