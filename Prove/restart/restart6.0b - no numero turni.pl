@@ -8,7 +8,7 @@
 
 type list(El) -->[]; [El|list(El)].
 type incrocio --> inc1,inc2,inc3,inc4,inc5,inc6,inc7,inc8,inc9,inc10.
-type stato -->in(incrocio,incrocio,int).
+type stato -->in(incrocio,incrocio).
 type real.
 
 
@@ -20,31 +20,31 @@ pred mossa(stato,stato).
 pred vicini(stato,list(stato)).
 pred agibile(incrocio,incrocio).
 pred pericolo(incrocio).
-%connesso(X,Y,P):-connesso(Y,X,P),!.
+%connesso(X,Y,P):-connesso(Y,X,P).
 %
 agibile(X,Y):-connesso(X,Y,_),not(pericolo(Y)).
 %mossa(in(X,Z),in(X,Q)):-sicuro(X),connesso(Z,Q,_),!.
 %mossa(in(X,Z),in(Y,Z)):-sicuro(Z),connesso(X,Y,_),!.
 %mossa(in(X,Z),in(Y,Q)):-connesso(X,Y,_),connesso(Z,Q,_).
 %
-mossa(in(X,Z,N),in(X,Q,N1)):-sicuro(X),agibile(Z,Q),N1 is N+1,!.
-mossa(in(X,Z,N),in(Y,Z,N1)):-sicuro(Z),agibile(X,Y),N1 is N+1,!.
-mossa(in(X,Z,N),in(Y,Q,N1)):-agibile(X,Y),agibile(Z,Q),N1 is N+1.
+mossa(in(X,Z),in(X,Q)):-sicuro(X),agibile(Z,Q),!.
+mossa(in(X,Z),in(Y,Z)):-sicuro(Z),agibile(X,Y),!.
+mossa(in(X,Z),in(Y,Q)):-agibile(X,Y),agibile(Z,Q).
 
 
-trovato(in(Inc1,Inc2,_)):-sicuro(Inc1),sicuro(Inc2).
+trovato(in(Inc1,Inc2)):-sicuro(Inc1),sicuro(Inc2).
 
 vicini(S,L):- setof(S1,mossa(S,S1),L),!.
 vicini(_Stat,[]).
 
 %costo(in(_,_),in(_,_),1).
 
-costo(in(X,Z,_),in(X,Q,_),C):-connesso(Z,Q,C),!.
-costo(in(X,Z,_),in(Y,Z,_),C):-connesso(X,Y,C),!.
-costo(in(X,Z,_),in(Y,Q,_),C):-connesso(X,Y,C1),connesso(Z,Q,C2),C is C1 + C2.
+costo(in(X,Z),in(X,Q),C):-connesso(Z,Q,C),!.
+costo(in(X,Z),in(Y,Z),C):-connesso(X,Y,C),!.
+costo(in(X,Z),in(Y,Q),C):-connesso(X,Y,C1),connesso(Z,Q,C2),C is C1 + C2.
 
-%eq(in(X,Y,N),in(Q,Z,N1)):-N1 is N1 + 2, X=Q,Y=Z.
-eq(in(X,Y,_),in(X,Y,_)).
+eq(in(X,Y),in(X,Y)).
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 sicuro(inc9).
@@ -67,7 +67,6 @@ connesso(inc8,inc9,2).
 connesso(inc10,inc9,1).
 
 
-
 connesso(inc2,inc1,5).
 connesso(inc5,inc1,8).
 connesso(inc3,inc1,6).
@@ -81,6 +80,9 @@ connesso(inc8,inc6,5).
 connesso(inc10,inc7,3).
 connesso(inc9,inc8,2).
 %connesso(inc10,inc9,1).
+
+
+
 
 
 
