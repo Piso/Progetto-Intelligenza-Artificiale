@@ -1,4 +1,4 @@
-:-  writeln('************************  Algoritmo generico ricerca ********').
+:-  writeln('************************  Algoritmo generico ricerca ********\n').
 :-  writeln('comandi:  load_problem(+F:nome_file), solve(+Start: nodo_problema, -Soluzione: nodo), show, noshow\n\n').
 
 :- dynamic(showflag/0).
