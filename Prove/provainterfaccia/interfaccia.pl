@@ -32,7 +32,7 @@ listaComandi:-assert(showflag),writeln('Comandi: r:solve(X,Y); h:help; a:esci').
 	 %     true
 	  %    ).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-creaSoluzione(X,Y,Z):-display(solve((in(X,Y)),Z)).
+creaSoluzione(Z):-solve(in(X,Y),Z).
 
 comandi :- readln(F),
 	(
@@ -41,15 +41,22 @@ comandi :- readln(F),
 	    write('Inserisci stato di partenza gruppo1: '),
 	    readln(X),
 	    write('Inserisci stato di partenza gruppo2: '),
-	    readln(Y),creaSoluzione,
+	    readln(Y),creaSoluzione(Z),
 	    writeln('. Computazione Terminata.'),comandi;
 	F = [h|_],!,listaComandi,comandi;
 	F = [a|_],!,abort;
 	true
 	).
 
-%:-comandi.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Posso estrarre valori dal case in questo modo.
+%case(1, inc1).
+%case(2, inc2).
+%
+%read(I).
+%case(I, Inc).
+%write(Inc).
 
 
 

@@ -73,6 +73,7 @@ pred trasforma(list(stato),nodo,list(nodo)).
 % ************************************************************************
 
 :- consult(interfaccia).
+:-consult(solve).
 
 solve(N,G) :-
       frontiera_iniziale(nc(N,[],0),F0),

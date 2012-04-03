@@ -56,7 +56,7 @@ pred taglia_cicli(stato, list(stato)).
 
 %% PREDICATI DEFINITI DAL PROGRAMMA
 
-%pred solve(stato, nodo).
+pred solve(stato, nodo).
   % solve(+Start,nc(-Goal,-Path,-Cost)) is nondet:   da Start si raggiunge
   %    Goal appraverso il cammino Path con costo Cost; Goal e' una
   %    soluzione

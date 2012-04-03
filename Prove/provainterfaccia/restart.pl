@@ -39,13 +39,18 @@ vicini(_Stat,[]).
 
 %costo(in(_,_),in(_,_),1).
 
+
 costo(in(X,Z),in(X,Q),C):-connesso(Z,Q,C),!.
 costo(in(X,Z),in(Y,Z),C):-connesso(X,Y,C),!.
 costo(in(X,Z),in(Y,Q),C):-connesso(X,Y,C1),connesso(Z,Q,C2),C is C1 + C2.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+eq(in(X,Y),in(X,Y)).
 
+sol(X,Y,Z):-solve(in(X,Y),Z).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sicuro(inc9).
+
 pericolo(inc3).
 
 
@@ -63,6 +68,69 @@ connesso(inc6,inc8,5).
 connesso(inc7,inc10,3).
 connesso(inc8,inc9,2).
 connesso(inc10,inc9,1).
+
+
+connesso(inc2,inc1,5).
+connesso(inc5,inc1,8).
+connesso(inc3,inc1,6).
+connesso(inc4,inc1,1).
+connesso(inc5,inc2,4).
+connesso(inc6,inc3,5).
+connesso(inc3,inc4,8).
+connesso(inc7,inc5,3).
+connesso(inc7,inc6,2).
+connesso(inc8,inc6,5).
+connesso(inc10,inc7,3).
+connesso(inc9,inc8,2).
+%connesso(inc10,inc9,1).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
