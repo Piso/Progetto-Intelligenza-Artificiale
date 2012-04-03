@@ -20,6 +20,8 @@ pred mossa(stato,stato).
 pred vicini(stato,list(stato)).
 pred agibile(incrocio,incrocio).
 pred pericolo(incrocio).
+pred traffico(incrocio,incrocio).
+
 %connesso(X,Y,P):-connesso(Y,X,P).
 %
 agibile(X,Y):-connesso(X,Y,_),not(pericolo(Y)).
@@ -39,13 +41,19 @@ vicini(_Stat,[]).
 
 %costo(in(_,_),in(_,_),1).
 
+%costi con aggiunta di traffico
 
+costo(in(X,Z),in(X,Q),C):-traffico(Z,Q), connesso(Z,Q,C1), C is C1 + 5,!.
+costo(in(X,Z),in(Y,Z),C):-traffico(X,Y),connesso(X,Y,C1),C is C1 + 5,!.
+costo(in(X,Z),in(Y,Q),C):-traffico(X,Y),traffico(Z,Q),connesso(X,Y,C1),connesso(Z,Q,C2),C is C1 + C2 + 10,!.
+costo(in(X,Z),in(Y,Q),C):-(traffico(X,Y);traffico(Z,Q)),connesso(X,Y,C1),connesso(Z,Q,C2),C is C1 + C2 + 5,!.
+
+%costi senza traffico
 costo(in(X,Z),in(X,Q),C):-connesso(Z,Q,C),!.
 costo(in(X,Z),in(Y,Z),C):-connesso(X,Y,C),!.
 costo(in(X,Z),in(Y,Q),C):-connesso(X,Y,C1),connesso(Z,Q,C2),C is C1 + C2.
 
 eq(in(X,Y),in(X,Y)).
-
 
 
 %Minimizzo il comando, non inserire punti dopo il nome dell'incrocio.
@@ -67,7 +75,9 @@ sicuro(inc9).
 
 pericolo(inc3).
 
-
+traffico(inc1,inc2).
+traffico(inc4,inc1).
+traffico(inc1,inc5).
 
 connesso(inc1,inc2,5).
 connesso(inc1,inc5,8).
