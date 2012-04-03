@@ -45,7 +45,7 @@ costo(in(X,Z),in(Y,Q),C):-connesso(X,Y,C1),connesso(Z,Q,C2),C is C1 + C2.
 
 eq(in(X,Y),in(X,Y)).
 
-trovasoluzione(X,Y):-solve(in(X,Y),Z).
+trovasoluzione(X,Y):-solve(in(X,Y),_).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

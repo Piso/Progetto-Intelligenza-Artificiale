@@ -32,7 +32,7 @@ listaComandi:-assert(showflag),writeln('Comandi: r:solve(X,Y); h:help; a:esci').
 	 %     true
 	  %    ).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-creaSoluzione:-solve((in(X,Y)),_).
+creaSoluzione(X,Y):-display(solve((in(X,Y)),_)).
 
 comandi :- readln(F),
 	(
@@ -49,6 +49,16 @@ comandi :- readln(F),
 	).
 
 %:-comandi.
+
+
+
+
+
+
+
+
+
+
 
 
 
