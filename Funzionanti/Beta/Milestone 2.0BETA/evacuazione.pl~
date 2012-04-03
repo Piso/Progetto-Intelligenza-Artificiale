@@ -6,9 +6,9 @@
 :-use_module('types/chk').
 :-consult(best_first).
 
-type list(El) -->[]; [El|list(El)].
+type list(El) --> []; [El|list(El)].
 type incrocio --> inc1,inc2,inc3,inc4,inc5,inc6,inc7,inc8,inc9,inc10.
-type stato -->in(incrocio,incrocio).
+type stato --> in(incrocio,incrocio).
 type clima --> sole,pioggia,tempesta,neve.
 type mezzo --> auto,aereo,bus,piedi.
 type real.
@@ -23,8 +23,12 @@ pred vicini(stato,list(stato)).
 pred agibile(incrocio,incrocio).
 pred pericolo(incrocio).
 pred traffico(incrocio,incrocio).
+%pred dissestato(incrocio,incrocio). facciamo? problema da discutere.
 pred meteo(clima,int).
 pred equip(mezzo,int).
+%pred incendio(incrocio).
+% se un incrocio è connesso a questo il peso della strada che lo collega
+% aumenta per via dell'incendio in corso.
 
 
 
@@ -48,19 +52,21 @@ vicini(_Stat,[]).
 %costo(in(_,_),in(_,_),1).
 
 %costi con aggiunta di traffico
-%
-meteo(W,_).
-equip(E,_).
+%FIXME qui sotto.
+%meteo(W,_):- assert(W,_). (metto poi var al posto dell'_)
+%equip(E,_).
 
-costo(in(X,Z),in(X,Q),C):-traffico(Z,Q), connesso(Z,Q,C1),meteo(W,P),equip(E,P1), C is C1 + 5 + P - P1,!.
-costo(in(X,Z),in(Y,Z),C):-traffico(X,Y),connesso(X,Y,C1),meteo(W,P),equip(E,P1),C is C1 + 5 + P - P1,!.
-costo(in(X,Z),in(Y,Q),C):-traffico(X,Y),traffico(Z,Q),connesso(X,Y,C1),connesso(Z,Q,C2),meteo(W,P),equip(E,P1),C is C1 + C2 + 10 + P - P1,!.
-costo(in(X,Z),in(Y,Q),C):-(traffico(X,Y);traffico(Z,Q)),connesso(X,Y,C1),connesso(Z,Q,C2),meteo(W,P),equip(E,P1),C is C1 + C2 + 5 + P - P1,!.
+costo(in(X,Z),in(X,Q),C):-traffico(Z,Q), connesso(Z,Q,C1),meteo(_,P),equip(_,P1), C is C1 + 5 + P + P1,!.
+costo(in(X,Z),in(Y,Z),C):-traffico(X,Y),connesso(X,Y,C1),meteo(_,P),equip(_,P1),C is C1 + 5 + P + P1,!.
+%Qui sotto traffico su entrambe le strade.
+costo(in(X,Z),in(Y,Q),C):-traffico(X,Y),traffico(Z,Q),connesso(X,Y,C1),connesso(Z,Q,C2),meteo(_,P),equip(_,P1),C is C1 + C2 + 10 + P + P1,!.
+%Qui sotto traffico su una delle due strade.
+costo(in(X,Z),in(Y,Q),C):-(traffico(X,Y);traffico(Z,Q)),connesso(X,Y,C1),connesso(Z,Q,C2),meteo(_,P),equip(_,P1),C is C1 + C2 + 5 + P + P + P1 + P1,!.
 
 %costi senza traffico
-costo(in(X,Z),in(X,Q),C):-connesso(Z,Q,C1),meteo(W,P),equip(E,P1),C is C1 + P - P1,!.
-costo(in(X,Z),in(Y,Z),C):-connesso(X,Y,C1),meteo(W,P),equip(E,P1),C is C1 + P - P1,!.
-costo(in(X,Z),in(Y,Q),C):-connesso(X,Y,C1),meteo(W,P),connesso(Z,Q,C2),equip(E,P1),C is C1 + C2 + P - P1.
+costo(in(X,Z),in(X,Q),C):-connesso(Z,Q,C1),meteo(_,P),equip(_,P1),C is C1 + P + P1,!.
+costo(in(X,Z),in(Y,Z),C):-connesso(X,Y,C1),meteo(_,P),equip(_,P1),C is C1 + P + P1,!.
+costo(in(X,Z),in(Y,Q),C):-connesso(X,Y,C1),meteo(_,P),connesso(Z,Q,C2),equip(_,P1),C is C1 + C2 + P + P + P1 + P1.
 
 eq(in(X,Y),in(X,Y)).
 
@@ -80,22 +86,20 @@ sol(X,Y,Z):-solve(in(X,Y),Z).
 %meteo(sole,0).
 %meteo(pioggia,7).
 %meteo(tempesta,12).
-meteo(neve,10).
+meteo(neve,0).
 
 %equip(auto,2).
-equip(aereo,4).
+%equip(aereo,4).
 %equip(bus,1).
-%equip(piedi,0).
+equip(piedi,1).
 
 sicuro(inc9).
 
 pericolo(inc3).
 
-meteo(sole,_).
-
-traffico(inc1,inc2).
-traffico(inc4,inc1).
-traffico(inc1,inc5).
+traffico(inc9,inc10).
+%traffico(inc4,inc1).
+%traffico(inc1,inc5).
 
 connesso(inc1,inc2,5).
 connesso(inc1,inc5,8).
