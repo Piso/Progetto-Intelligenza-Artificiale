@@ -144,12 +144,12 @@ sol(X,Y,Z):-solve(in(X,Y),Z).
 %meteo(sole,0).
 %meteo(pioggia,7).
 %meteo(tempesta,12).
-meteo(neve,0).
+meteo(neve,10).
 
 %equip(auto,0).
 %equip(tram,3).
 %equip(bus,2).
-equip(piedi,1).
+equip(piedi,5).
 
 sicuro(inc9).
 

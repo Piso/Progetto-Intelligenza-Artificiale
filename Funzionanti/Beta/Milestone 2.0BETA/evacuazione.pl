@@ -13,7 +13,9 @@ type clima --> sole,pioggia,tempesta,neve.
 type mezzo --> auto,tram,bus,piedi.
 type real.
 
-
+%pred folla(mossa). fare con calma.
+%pred occupato(incrocio). decommentare e pensare come far attendere
+%un gruppo.
 pred sicuro(incrocio).
 pred trovato(stato).
 pred connesso(incrocio,incrocio,int).
@@ -50,6 +52,11 @@ mossa(in(X,Z),in(Y,Z)):-
 mossa(in(X,Z),in(Y,Q)):-
 	agibile(X,Y),
 	agibile(Z,Q).
+
+%folla(in(X,Y),in(Y,Q)):-
+	%agibile(X,Y),
+	%agibile(Y,Q),
+	%X \= Q.
 
 
 trovato(in(Inc1,Inc2)):-
