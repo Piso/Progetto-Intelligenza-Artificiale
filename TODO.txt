@@ -1,20 +1,19 @@
-Aggiornato il 02-04-2012 14:40
+Aggiornato il 03-04-2012 18:20
 
-IDEONE PAZZESCHE --> Zio non mi metto a scrivere perche' ho paura che mi inculi...dopo ti dico.
-
+- Inseriamo i luoghi che legano i constraint in base alla regione geografica?
+- Incendi? 
+- Guardare nel file i predicati da aggiungere.
 
 E' necessario:
-
-
-	-vedere se e come gestire la strada trafficata <-- non in fase preliminare. %allora la sposto nei successivamente
-
 	-rendere più complicato il tutto
-		-più punti di arrivo
-		-molti più incroci
-		-evitare che 2 gruppi si trovino nello stesso incrocio
-		-restrizioni esterne
-			-vento
-			-ecc...
-			-SuperCondizione meteo?
-	
+	-più punti di arrivo
+	-molti più incroci
+	-evitare che 2 gruppi si trovino nello stesso incrocio
+	-quantificare traffico?
+	-sistemare meteo ed equip per renderli piu' puliti
+
+
+
+
+RELAZIONE.
 
