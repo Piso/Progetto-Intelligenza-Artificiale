@@ -39,18 +39,15 @@ vicini(_Stat,[]).
 
 %costo(in(_,_),in(_,_),1).
 
-
 costo(in(X,Z),in(X,Q),C):-connesso(Z,Q,C),!.
 costo(in(X,Z),in(Y,Z),C):-connesso(X,Y,C),!.
 costo(in(X,Z),in(Y,Q),C):-connesso(X,Y,C1),connesso(Z,Q,C2),C is C1 + C2.
 
 eq(in(X,Y),in(X,Y)).
 
-trovasoluzione(X,Y,Z):-solve(in(X,Y),Z).
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-sicuro(inc9).
 
+sicuro(inc9).
 pericolo(inc3).
 
 

@@ -1,4 +1,0 @@
-
-risolvi(Z):-readln(X),readln(Y),trovaSol(Z).
-
-trovaSol(Z):-solve(in(X,Y),Z).

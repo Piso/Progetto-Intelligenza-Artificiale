@@ -1,11 +1,11 @@
 :- use_module('types/chk').
-% :- consult(interface).
+:- consult(interface).
 
 :- no_check(writeln(_)).
 
 %%	TIPI PREDEFINITI
 
-% type float --> 0; 1; float + float; float-float; float/float; float * float.
+type float --> 0; 1; float + float; float-float; float/float; float * float.
 type list(X) --> [ ]  ;  [X | list(X)].
 
 %%%%   TIPO DEFINITO DALLA STRATEGIA
@@ -28,7 +28,7 @@ pred vicini(TNP, list(TNP)).
 pred costo(TNP, TNP, float).
    % costo(+N1,+N2,-C) is det: C e' il costo dell'arco (N1,N2)
 
-% pred h(_TNP,float).
+pred h(_TNP,float).
    % h(+N,-H) is det:  N e' il nodo corrente, H e' la stima
    % euristica del costo da N ad una soluzione ottimale
 
@@ -99,6 +99,8 @@ trasforma([V|T], nc(N,Path,Cost),[nc(V,[N|Path],Cost1)|TT]) :-
         costo(N,V,K),
 	Cost1 is Cost+K,
         trasforma(T,nc(N,Path,Cost),TT).
+
+
 
 
 

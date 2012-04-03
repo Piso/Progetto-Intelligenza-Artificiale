@@ -1,7 +1,7 @@
 :- consult(frontiera_ord).
 :- consult(search).
 
-type float --> float+float.
+% type float --> float+float.
 type nodo(PN) --> nc(PN,list(PN),float).
 
 %%%  STRATEGIA BEST FIRST con taglio cicli che usa eq

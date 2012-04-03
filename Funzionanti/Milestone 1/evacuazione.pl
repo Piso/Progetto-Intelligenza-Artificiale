@@ -46,7 +46,21 @@ costo(in(X,Z),in(Y,Q),C):-connesso(X,Y,C1),connesso(Z,Q,C2),C is C1 + C2.
 
 eq(in(X,Y),in(X,Y)).
 
-solve(in(X,Y),Z):-sol(primo(X),secondo(Y),terzo(Z)).
+
+
+%Minimizzo il comando, non inserire punti dopo il nome dell'incrocio.
+%
+%
+%
+
+
+risolvi(Z):-write('Stato primo gruppo: '),read(X),
+	    write('Stato secondo gruppo: '),read(Y),
+	    (sol(X,Y,Z)).
+%trovaSol(Z,Primo,Secondo):-solve(in(Primo,Secondo),Z).
+
+
+sol(X,Y,Z):-solve(in(X,Y),Z).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sicuro(inc9).
@@ -83,6 +97,55 @@ connesso(inc8,inc6,5).
 connesso(inc10,inc7,3).
 connesso(inc9,inc8,2).
 %connesso(inc10,inc9,1).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
