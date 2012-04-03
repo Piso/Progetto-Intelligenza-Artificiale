@@ -10,6 +10,7 @@ type list(El) -->[]; [El|list(El)].
 type incrocio --> inc1,inc2,inc3,inc4,inc5,inc6,inc7,inc8,inc9,inc10.
 type stato -->in(incrocio,incrocio).
 type clima --> sole,pioggia,tempesta,neve.
+type mezzo --> auto,aereo,bus,piedi.
 type real.
 
 
@@ -23,7 +24,7 @@ pred agibile(incrocio,incrocio).
 pred pericolo(incrocio).
 pred traffico(incrocio,incrocio).
 pred meteo(clima,int).
-
+pred equip(mezzo,int).
 
 
 
@@ -47,25 +48,24 @@ vicini(_Stat,[]).
 %costo(in(_,_),in(_,_),1).
 
 %costi con aggiunta di traffico
+%FIXME qui sotto.
+%meteo(W,_):- assert(W,_). (metto poi var al posto dell'_)
+%equip(E,_).
 
-costo(in(X,Z),in(X,Q),C):-traffico(Z,Q), connesso(Z,Q,C1),meteo(W,P), C is C1 + 5 + P,!.
-costo(in(X,Z),in(Y,Z),C):-traffico(X,Y),connesso(X,Y,C1),meteo(W,P),C is C1 + 5 + P,!.
-costo(in(X,Z),in(Y,Q),C):-traffico(X,Y),traffico(Z,Q),connesso(X,Y,C1),connesso(Z,Q,C2),meteo(W,P),C is C1 + C2 + 10 + P,!.
-costo(in(X,Z),in(Y,Q),C):-(traffico(X,Y);traffico(Z,Q)),connesso(X,Y,C1),connesso(Z,Q,C2),meteo(W,P),C is C1 + C2 + 5 + P,!.
+costo(in(X,Z),in(X,Q),C):-traffico(Z,Q), connesso(Z,Q,C1),meteo(W,P),equip(E,P1), C is C1 + 5 + P - P1,!.
+costo(in(X,Z),in(Y,Z),C):-traffico(X,Y),connesso(X,Y,C1),meteo(W,P),equip(E,P1),C is C1 + 5 + P - P1,!.
+costo(in(X,Z),in(Y,Q),C):-traffico(X,Y),traffico(Z,Q),connesso(X,Y,C1),connesso(Z,Q,C2),meteo(W,P),equip(E,P1),C is C1 + C2 + 10 + P - P1,!.
+costo(in(X,Z),in(Y,Q),C):-(traffico(X,Y);traffico(Z,Q)),connesso(X,Y,C1),connesso(Z,Q,C2),meteo(W,P),equip(E,P1),C is C1 + C2 + 5 + P - P1,!.
 
 %costi senza traffico
-costo(in(X,Z),in(X,Q),C):-connesso(Z,Q,C1),meteo(W,P),C is C1 + P,!.
-costo(in(X,Z),in(Y,Z),C):-connesso(X,Y,C1),meteo(W,P),C is C1 + P,!.
-costo(in(X,Z),in(Y,Q),C):-connesso(X,Y,C1),meteo(W,P),connesso(Z,Q,C2),C is C1 + C2 + P.
+costo(in(X,Z),in(X,Q),C):-connesso(Z,Q,C1),meteo(W,P),equip(E,P1),C is C1 + P - P1,!.
+costo(in(X,Z),in(Y,Z),C):-connesso(X,Y,C1),meteo(W,P),equip(E,P1),C is C1 + P - P1,!.
+costo(in(X,Z),in(Y,Q),C):-connesso(X,Y,C1),meteo(W,P),connesso(Z,Q,C2),equip(E,P1),C is C1 + C2 + P - P1.
 
 eq(in(X,Y),in(X,Y)).
 
 
-%Minimizzo il comando, non inserire punti dopo il nome dell'incrocio.
-%
-%
-%
-
+%Minimizzo il comando
 
 risolvi(Z):-write('Stato primo gruppo: '),read(X),
 	    write('Stato secondo gruppo: '),read(Y),
@@ -81,8 +81,11 @@ sol(X,Y,Z):-solve(in(X,Y),Z).
 %meteo(pioggia,7).
 %meteo(tempesta,12).
 meteo(neve,10).
-%assert(meteo(neve,10)).
 
+%equip(auto,2).
+equip(aereo,4).
+%equip(bus,1).
+%equip(piedi,0).
 
 sicuro(inc9).
 
