@@ -1,0 +1,10 @@
+Stato1 ---- arco --> stato2
+
+Creare
+
+arc([S1,S2],[S3,S4],[m1,m2]):-
+			arc1(S1,S3,m1),
+			arc1(S2,S4,m2),
+			....
+
+e lo stato contiene Stato --> luogo,tempo.
