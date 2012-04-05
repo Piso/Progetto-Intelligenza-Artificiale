@@ -19,6 +19,8 @@ pred mossa(stato,stato).
 pred vicini(stato,list(stato)).
 pred arc([stato,stato],[stato,stato],[mossa,mossa]).
 pred arc1(stato,stato,mossa).
+pred node(stato,stato).
+
 
 %COSTRAINT
 pred agibile(incrocio,incrocio).

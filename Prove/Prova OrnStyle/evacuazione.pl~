@@ -8,20 +8,19 @@
 
 type list(El) --> []; [El|list(El)].
 type incrocio --> inc1,inc2,inc3,inc4,inc5,inc6,inc7,inc8,inc9,inc10.
-type stato --> in(incrocio,incrocio).
-type clima --> sole,pioggia,tempesta,neve.
-type mezzo --> auto,tram,bus,piedi.
+type stato --> in(incrocio,int). %luogo e tempo
 type real.
 
-%pred folla(mossa). fare con calma.
-%pred occupato(incrocio). decommentare e pensare come far attendere
-%un gruppo.
 pred sicuro(incrocio).
 pred trovato(stato).
 pred connesso(incrocio,incrocio,int).
 %pred connesso(incrocio,incrocio).
 pred mossa(stato,stato).
 pred vicini(stato,list(stato)).
+pred arc([stato,stato],[stato,stato],[mossa,mossa]).
+pred arc1(stato,stato,mossa).
+
+%COSTRAINT
 pred agibile(incrocio,incrocio).
 pred pericolo(incrocio).
 pred traffico(incrocio,incrocio).
@@ -36,6 +35,17 @@ pred equip(mezzo,int).
 
 %connesso(X,Y,P):-connesso(Y,X,P).
 %
+arc([S1,S2],[S3,S4],[M1,M2]):-
+	arc1(S1,S3,M1),
+	arc1(S2,S4,M2).
+
+arc1(S1,S2,M):-
+	M=mossa(S1,S2).
+
+mossa(in(Inc1,T),in(Inc2,T1)):-
+	connesso(Inc1,Inc2,L),
+	T1 is T + L.
+
 agibile(X,Y):-
 	connesso(X,Y,_),
 	not(pericolo(Y)).
