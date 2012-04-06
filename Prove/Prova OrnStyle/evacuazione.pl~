@@ -12,13 +12,14 @@ type stato --> in(incrocio,int). %luogo e tempo
 type real.
 
 pred sicuro(incrocio).
-pred trovato(stato).
+pred trovato(node).
 pred connesso(incrocio,incrocio,int).
-%pred connesso(incrocio,incrocio).
 pred mossa(stato,stato).
-pred vicini(stato,list(stato)).
+pred vicini(node,list(node)).
 pred arc([stato,stato],[stato,stato],[mossa,mossa]).
 pred arc1(stato,stato,mossa).
+pred node(stato,stato).
+
 
 %COSTRAINT
 pred agibile(incrocio,incrocio).
@@ -35,53 +36,41 @@ pred equip(mezzo,int).
 
 %connesso(X,Y,P):-connesso(Y,X,P).
 %
-arc([S1,S2],[S3,S4],[M1,M2]):-
+%arc([S1,S2],[S3,S4],[M1,M2]):-
+%	arc1(S1,S3,M1),
+%	arc1(S2,S4,M2).
+
+arc(node(S1,S2),node(S3,S4),[M1,M2]):-
 	arc1(S1,S3,M1),
 	arc1(S2,S4,M2).
 
+
 arc1(S1,S2,M):-
 	M=mossa(S1,S2).
+
+
 
 mossa(in(Inc1,T),in(Inc2,T1)):-
 	connesso(Inc1,Inc2,L),
 	T1 is T + L.
 
+
 agibile(X,Y):-
 	connesso(X,Y,_),
 	not(pericolo(Y)).
 
-
-mossa(in(X,Z),in(X,Q)):-
-	sicuro(X),
-	agibile(Z,Q),!.
-
-mossa(in(X,Z),in(Y,Z)):-
-	sicuro(Z),
-	agibile(X,Y),!.
-
-mossa(in(X,Z),in(Y,Q)):-
-	agibile(X,Y),
-	agibile(Z,Q).
-
-%Flusso, la folla si crea mentre entrambi i gruppi si spostano.
-%folla(in(X,Y),in(Y,Q)):-
-	%agibile(X,Y),
-	%agibile(Y,Q),
-	%X \= Q.
-%Folla sotto creata dal movimento di un gruppo in nodo occupato.
-%folla(in(X,Y),in(Y,Y)):-
-%	 agibile(X,Y),
-%
-%mossa() :-agibile,folla...in progress...
-
-
-trovato(in(Inc1,Inc2)):-
+trovato(in(Inc1,_),in(Inc2,_)):-
 	sicuro(Inc1),
 	sicuro(Inc2).
 
-vicini(S,L):-
-	setof(S1,mossa(S,S1),L),!.
-vicini(_Stat,[]).
+%vicini(S,L):-
+%	setof(S1,mossa(S,S1),L),!.
+%vicini(_Stat,[]).
+
+
+vicini(N,L):-
+	setof(N2,arc(N,N2,_),L),!.
+vicini(_Node,[]).
 
 %costo(in(_,_),in(_,_),1).
 
@@ -148,16 +137,11 @@ eq(in(X,Y),in(X,Y)).
 
 %Minimizzo il comando
 
-risolvi(Z):-
-	write('Stato primo gruppo: '),
-	read(X),
-	write('Stato secondo gruppo: '),
-	read(Y),
-	(sol(X,Y,Z)).
+
 %trovaSol(Z,Primo,Secondo):-solve(in(Primo,Secondo),Z).
 
 
-sol(X,Y,Z):-solve(in(X,Y),Z).
+sol(X,Y,Z):-solve(node(in(X,0),in(Y,0)),Z).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
