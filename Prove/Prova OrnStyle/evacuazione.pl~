@@ -8,16 +8,19 @@
 
 type list(El) --> []; [El|list(El)].
 type incrocio --> inc1,inc2,inc3,inc4,inc5,inc6,inc7,inc8,inc9,inc10.
-type stato --> in(incrocio,int). %luogo e tempo
+%type stato --> in(incrocio,int). %luogo e tempo
 type real.
-type nodo -->node(stato,stato).
+%type nodo -->node(stato,stato).
+type nodo -->node(incrocio,incrocio).
+type arco -->arc(nodo,nodo,mossa,mossa).
+
 pred sicuro(incrocio).
 pred trovato(node).
 pred connesso(incrocio,incrocio,int).
 pred mossa(stato,stato).
-pred vicini(node,list(node)).
-pred arc(nodo,nodo,[mossa,mossa]).
-pred arc1(stato,stato,mossa).
+pred vicini(nodo,list(nodo)).
+%pred arc(nodo,nodo,[mossa,mossa]).
+%pred arc1(stato,stato,mossa).
 %pred node(stato,stato).
 
 
@@ -28,19 +31,21 @@ pred arc1(stato,stato,mossa).
 %	arc1(S1,S3,M1),
 %	arc1(S2,S4,M2).
 
-arc(node(S1,S2),node(S3,S4),[M1,M2]):-
-	arc1(S1,S3,M1),
-	arc1(S2,S4,M2).
+%arc(node(S1,S2),node(S3,S4),[M1,M2]):-
+%	arc1(S1,S3,M1),
+%	arc1(S2,S4,M2).
 
+
+arc(node(Inc1,Inc2),node(Inc3,Inc4),M1,M2):-
+	M1=mossa(Inc1,Inc3),
+	M2=mossa(Inc2,Inc4).
 
 arc1(S1,S2,mossa(S1,S2)).
 
 
 
+mossa(Inc1,Inc2):-connesso(Inc1,Inc2,_).
 
-mossa(in(Inc1,T),in(Inc2,T1)):-
-	connesso(Inc1,Inc2,L),
-	T1 is T + L.
 
 trovato(node(in(Inc1,_),in(Inc2,_))):-
 	sicuro(Inc1),
@@ -51,8 +56,13 @@ trovato(node(in(Inc1,_),in(Inc2,_))):-
 %vicini(_Stat,[]).
 
 
+%vicini(node(S1,S2),L):-
+%setof(node(S3,S4),arc(node(S1,S2),node(S3,S4),[mossa(S1,S3),mossa(S2,S4)])
+      %,L),!.
+%vicini(_Node,[]).
+
 vicini(N,L):-
-	setof(N2,arc(N,N2,[_,_]),L),!.
+	setof(N1,arc(N,N1,_,_),L).
 vicini(_Node,[]).
 
 %costo(in(_,_),in(_,_),1).
@@ -66,7 +76,9 @@ eq(node(X,Y),node(X,Y)).
 
 
 
-sol(X,Y,Z):-solve(node(in(X,0),in(Y,0)),Z).
+%sol(X,Y,Z):-solve(node(in(X,0),in(Y,0)),Z).
+
+sol(X,Y,Z):-solve(node(X,Y),Z).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
