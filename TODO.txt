@@ -1,4 +1,6 @@
-Aggiornato il 03-04-2012 18:20
+Aggiornato il 07-04-2012 14:15
+
+WARNING: zzzio mi fa casino con i files! quindi cancello e rifaccio pull. Ma tanto per essere sicuro di dove stai lavorando...tu sei su prova OrnyStyle giusto? perchè avevo cominciato sulla Milestone beta3.0 ma ho visto che hai creato l'altra cartella e quindi visto che sei andato avanti proseguiamo su quella!
 
 - Inseriamo i luoghi che legano i constraint in base alla regione geografica?
 - Incendi? 
