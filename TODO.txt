@@ -1,21 +1,26 @@
 Aggiornato il 07-04-2012 14:15
 
-WARNING: zzzio mi fa casino con i files! quindi cancello e rifaccio pull. Ma tanto per essere sicuro di dove stai lavorando...tu sei su prova OrnyStyle giusto? perchè avevo cominciato sulla Milestone beta3.0 ma ho visto che hai creato l'altra cartella e quindi visto che sei andato avanti proseguiamo su quella!
+ZZZZZZZIOOOOOO!!! Mi ero rotto le balle che col metodo di Ornaghi non andasse, quindi ho modificato pesantemente il nostro che andava, e adesso funziona anche con i percorsi parziali!
 
-- Inseriamo i luoghi che legano i constraint in base alla regione geografica?
-- Incendi? 
-- Guardare nel file i predicati da aggiungere.
+Ti spiego rapidamente:ogni gruppo puo' essere arrivato a un incrocio o puo' essere in viaggio.
+il predicato viaggio(incrocio,int) sta a significare che un gruppo viaggia verso un certo incrocio, e gli manca un int per arrivarci.
+I viaggi dei gruppi si "fermano" quando uno dei due arriva in un incrocio, e se l'altro non e' arrivato il suo stato passa "in viaggio"
 
-E' necessario:
-	-rendere più complicato il tutto
-	-più punti di arrivo
-	-molti più incroci
-	-evitare che 2 gruppi si trovino nello stesso incrocio
-	-quantificare traffico?
-	-sistemare meteo ed equip per renderli piu' puliti
+FUNZIONA! Non e' come ce l'ha consigliato Orny, ma fa ESATTAMENTE quello che voleva lui, quindi direi di andare avanti con questo, che ne dici? (il file sta dentro prove/nuovaprova)
 
+Per ora il costo e' unitario, riesci a farli tu i costi?
 
+ 
+TODO (dal piu' importante al meno importante):
 
+	-inserire i costi
+	-ridisegnare il grafo per implementare distanza manhattan (posso farlo io)
+	-calcolare la distanza di manhattan e usarla come euristica h
+	-testing di A*
+	-costraint e cazzate varie
+	-relazione
 
-RELAZIONE.
+i costi sono la priorita', ma se li fai scialli e ti senti un cavallo anche il calcolo della distanza in linea d'aria e' un bel po' di lavoro!
+
+Buona Pasqua!!!
 
