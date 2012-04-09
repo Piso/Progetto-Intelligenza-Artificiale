@@ -13,7 +13,7 @@ Per ora il costo e' unitario, riesci a farli tu i costi?
  
 TODO (dal piu' importante al meno importante):
 
-	-inserire i costi
+	-inserire i costi  ---> work in progress...
 	-ridisegnare il grafo per implementare distanza manhattan (posso farlo io)
 	-calcolare la distanza di manhattan e usarla come euristica h
 	-testing di A*
