@@ -1,6 +1,5 @@
-Aggiornato il 07-04-2012 14:15
+Aggiornato il 10-04-2012 2:40
 
-ZZZZZZZIOOOOOO!!! Mi ero rotto le balle che col metodo di Ornaghi non andasse, quindi ho modificato pesantemente il nostro che andava, e adesso funziona anche con i percorsi parziali!
 
 Ti spiego rapidamente:ogni gruppo puo' essere arrivato a un incrocio o puo' essere in viaggio.
 il predicato viaggio(incrocio,int) sta a significare che un gruppo viaggia verso un certo incrocio, e gli manca un int per arrivarci.
@@ -8,16 +7,18 @@ I viaggi dei gruppi si "fermano" quando uno dei due arriva in un incrocio, e se 
 
 FUNZIONA! Non e' come ce l'ha consigliato Orny, ma fa ESATTAMENTE quello che voleva lui, quindi direi di andare avanti con questo, che ne dici? (il file sta dentro prove/nuovaprova)
 
-Per ora il costo e' unitario, riesci a farli tu i costi?
+EDIT:Controllato il file! secondo me va benone così, non ho indovinato al volo il sistema del costo, ma mi sembra che in questo modo vada già tutto bene.(vedi file)
+
+Per ora il costo e' unitario, riesci a farli tu i costi?-->DONE
 
  
 TODO (dal piu' importante al meno importante):
 
-	-inserire i costi  ---> work in progress...
-	-ridisegnare il grafo per implementare distanza manhattan (posso farlo io)
+	-inserire i costi  ---> DONE
+	-ridisegnare il grafo per implementare distanza manhattan (posso farlo io)-->se vuoi ci penso io....con che programma te lo faccio?
 	-calcolare la distanza di manhattan e usarla come euristica h
 	-testing di A*
-	-costraint e cazzate varie
+	-costraint e cazzate varie extra
 	-relazione
 
 i costi sono la priorita', ma se li fai scialli e ti senti un cavallo anche il calcolo della distanza in linea d'aria e' un bel po' di lavoro!

@@ -123,7 +123,6 @@ vicini(_Stat,[]).
 % inseriti i constraint, quindi ai costi non li ho aggiunti.
 %
 
-
 %Gruppo uno arrivato, due in viaggio.
 
 costo(in(arrivato(X),viaggio(Y,C1)),in(arrivato(X),arrivato(Y)),C):-C is C + C1,!.
