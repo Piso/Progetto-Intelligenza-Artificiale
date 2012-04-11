@@ -136,6 +136,13 @@ costo(in(viaggio(X,C1),arrivato(Y)),in(arrivato(X),arrivato(Y)),C):-C is C + C1,
 
 costo(in(viaggio(X,C1),viaggio(Y,C2)),in(arrivato(X),arrivato(Y)),C):-C is C + C1 + C2,!.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Costi mancanti...metto questo che avevo dimenticato sicuramente..
+%gli altri parliamone che secondo me qualcosa non va.
+costo(in(arrivato(X),arrivato(Y)),in(arrivato(Z),arrivato(Q)),C):-connesso(X,Z,C1),connesso(Y,Q,C2),C is C + C1 + C2,!.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 eq(in(X,Y),in(X,Y)).
 
