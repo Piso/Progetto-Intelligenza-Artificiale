@@ -51,32 +51,31 @@ mossa(in(arrivato(X),arrivato(Q)),in(arrivato(Y),arrivato(Q))):-
 
 mossa(in(viaggio(X,N),arrivato(Z)),in(arrivato(X),viaggio(Q,N2))):-
 	connesso(Z,Q,L),
-	L @> N,
-	N2 is L-N,!.
+	L > N,
+	N2 is L-N.
 
 %In viaggio il primo, arriva il secondo
 mossa(in(viaggio(X,N),arrivato(Z)),in(viaggio(X,N2),arrivato(Q))):-
 	connesso(Z,Q,L),
-	N @> L,
-	N2 is N-L,!.
+	N > L,
+	N2 is N-L.
+
 %in viaggio primo, secondo da inc, arrivano entrambi
 mossa(in(viaggio(X,N),arrivato(Z)),in(arrivato(X),arrivato(Q))):-
 	connesso(Z,Q,L),
 	N=:=L,!.
 
-
 %Primo parte da incrocio,In viaggio il secondo, arriva il primo
 mossa(in(arrivato(X),viaggio(Q,N)),in(arrivato(Y),viaggio(Q,N2))):-
 	connesso(X,Y,L),
-	N @> L,
+	N > L,
 	N2 is N-L.
 
 %primo parte da incrocio,In viaggio il secondo, arriva il secondo
 mossa(in(arrivato(X),viaggio(Q,N)),in(viaggio(Y,N2),arrivato(Q))):-
 	connesso(X,Y,L),
-	L @> N,
-	N2 is L - N,!.
-
+	L > N,
+	N2 is L - N.
 
 %Primo parte da incrocio, secondo in viaggio, arrivano entrambi
 mossa(in(arrivato(X),viaggio(Q,L)),in(arrivato(Y),arrivato(Q))):-
@@ -85,31 +84,26 @@ mossa(in(arrivato(X),viaggio(Q,L)),in(arrivato(Y),arrivato(Q))):-
 	L=:=N,!.
 
 
-
-
-%partono da stesso incrocio, arrivano a stesso incrocio.
-mossa(in(arrivato(X),arrivato(X)),in(arrivato(Y),arrivato(Y))):-
-	connesso(X,Y,_).
-
 %Partono entrambi da incrocio, il secondo arriva a dest.
 mossa(in(arrivato(X),arrivato(Z)),in(viaggio(Y,N),arrivato(Q))):-
 	connesso(X,Y,L),
 	connesso(Z,Q,L2),
-	L @> L2,
+	L > L2,
 	N is L-L2.
 
 %Partono entrambi da incrocio, il primo arriva a dest.
 mossa(in(arrivato(X),arrivato(Z)),in(arrivato(Y),viaggio(Q,N))):-
       connesso(X,Y,L),
       connesso(Z,Q,L2),
-      L2 @> L,
+      L2 > L,
       N is L2 - L.
 
 %Partono entrambi da incrocio, arrivano entrambi in un incrocio
 mossa(in(arrrivato(X),arrivato(Y)),in(arrivato(Z),arrivato(Q))):-
 	connesso(X,Z,L1),
 	connesso(Y,Q,L2),
-	L1==L2,!.
+	L1=:=L2,!.
+
 
 
 
@@ -152,7 +146,7 @@ costo(in(viaggio(X,C1),arrivato(Y)),in(viaggio(X,C2),arrivato(Q)),C):-
 	C is C3+(C1-C2),!.
 
 %In viaggio il primo gruppo,arrivano entrambi
-costo(in(viaggio(X,C1),arrivato(Y)),in(arrivato(X),arrivato(Q))):-
+costo(in(viaggio(X,C1),arrivato(Y)),in(arrivato(X),arrivato(Q)),C):-
 	connesso(Y,Q,C2),
 	C is C1 + C2,!.
 
