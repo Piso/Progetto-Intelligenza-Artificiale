@@ -1,8 +1,3 @@
-% Versione modificata del progetto:
-% cambio strada con connesso.
-% per ora costo unitario.
-% per ora pochi nodi.
-%
 :-use_module('types/chk').
 :-consult(best_first).
 
@@ -16,10 +11,7 @@ type real.
 pred sicuro(incrocio).
 pred trovato(stato).
 pred costo(stato,stato,int).
-%connesso (incrocio, incrocio, intero che rappresenta il tempo di
-%percorrenza di quella strada giusto?
 pred connesso(incrocio,incrocio,int).
-%pred connesso(incrocio,incrocio).
 pred mossa(stato,stato).
 pred vicini(stato,list(stato)).
 
@@ -32,11 +24,6 @@ pred traffico(incrocio,incrocio).
 
 
 agibile(X,Y):-connesso(X,Y,_),not(pericolo(Y)).
-%mossa(in(X,Z),in(X,Q)):-sicuro(X),connesso(Z,Q,_),!.
-%mossa(in(X,Z),in(Y,Z)):-sicuro(Z),connesso(X,Y,_),!.
-%mossa(in(X,Z),in(Y,Q)):-connesso(X,Y,_),connesso(Z,Q,_).
-%
-%
 
 %primo gruppo arrivato al sicuro, secondo gruppo in viaggio
 
@@ -101,10 +88,11 @@ mossa(in(arrivato(X),arrivato(Z)),in(viaggio(Y,N),arrivato(Q))):-
 	L > L2,
 	N is L-L2,!.
 
-
-%mossa(in(X,Z),in(X,Q)):-sicuro(X),agibile(Z,Q),!.
-%mossa(in(X,Z),in(Y,Z)):-sicuro(Z),agibile(X,Y),!.
-%mossa(in(X,Z),in(Y,Q)):-agibile(X,Y),agibile(Z,Q).
+%Partono entrambi da incrocio, arrivano entrambi in un incrocio
+mossa(in(arrrivato(X),arrivato(Y)),in(arrivato(Z),arrivato(Q))):-
+	connesso(X,Z,L1),
+	connesso(Y,Q,L2),
+	L1==L2,!.
 
 
 trovato(in(arrivato(Inc1),arrivato(Inc2))):-sicuro(Inc1),sicuro(Inc2).
@@ -116,69 +104,71 @@ vicini(_Stat,[]).
 %Definito costo unitario su tutte le strade
 %costo(in(_,_),in(_,_),1).
 
-
-%costi senza traffico
-%costo(in(X,Z),in(X,Q),C):-connesso(Z,Q,C),!.
-%costo(in(X,Z),in(Y,Z),C):-connesso(X,Y,C),!.
-% costo(in(X,Z),in(Y,Q),C):-connesso(X,Y,C1),connesso(Z,Q,C2),C is C1 +
-% C2.
-%Ovviamente il connesso non è più necessario, perchè viene già
-% controllato dalla mossa. In questo file di prova non sono stati
-% inseriti i constraint, quindi ai costi non li ho aggiunti.
-%
-
 %primo al sicuro,secondo in incrocio
-costo(in(arrivato(X),arrivato(Y)),in(arrivato(X),arrivato(Q)),C):-connesso(Y,Q,C2),C is C2,!.
+costo(in(arrivato(X),arrivato(Y)),in(arrivato(X),arrivato(Q)),C):-
+	connesso(Y,Q,C2),
+	C is C2,!.
+
 %primo al sicuro, due in viaggio.
-costo(in(arrivato(X),viaggio(Y,C1)),in(arrivato(X),arrivato(Y)),C):-C is C1,!.
-
-
+costo(in(arrivato(X),viaggio(Y,C1)),in(arrivato(X),arrivato(Y)),C):-
+	C is C1,!.
 
 %secondo al sicuro,primo in incrocio
 costo(in(arrivato(X),arrivato(Y)),in(arrivato(Z),arrivato(Y)),C):-
 	connesso(X,Z,C2),
 	C is C2,!.
+
 %Gruppo due arrivato al sicuro, uno in viaggio.
-costo(in(viaggio(X,C1),arrivato(Y)),in(arrivato(X),arrivato(Y)),C):-C is C1,!.
-
-
+costo(in(viaggio(X,C1),arrivato(Y)),in(arrivato(X),arrivato(Y)),C):-
+	C is C1,!.
 
 %Da incrocio a incrocio sia gruppo uno che gruppo due
-costo(in(arrivato(X),arrivato(Y)),in(arrivato(Z),arrivato(Q)),C):-connesso(X,Z,C1),connesso(Y,Q,C2),C is C1 + C2,!.
+costo(in(arrivato(X),arrivato(Y)),in(arrivato(Z),arrivato(Q)),C):-
+	connesso(X,Z,C1),
+	connesso(Y,Q,C2),
+	C is C1 + C2,!.
 
+%In viaggio il primo gruppo, arriva primo gruppo
+costo(in(viaggio(X,C1),arrivato(Y)),in(arrivato(X),viaggio(Q,C2)),C):-
+	connesso(Y,Q,C3),
+	C is C1+(C3-C2),!.
 
+%In viaggio il primo gruppo, arriva il secondo
+costo(in(viaggio(X,C1),arrivato(Y)),in(viaggio(X,C2),arrivato(Q)),C):-
+	connesso(Y,Q,C3),
+	C is C3+(C1-C2),!.
 
-%In viaggio il primo gruppo, arriva primo gruppo //controllare
-costo(in(viaggio(X,C1),arrivato(Y)),in(arrivato(X),viaggio(Q,_)),C):-connesso(Y,Q,_),C is C1*2,!.
-%In viaggio il primo gruppo, arriva il secondo MANCA
-%
+%In viaggio il secondo, arriva il primo
+costo(in(arrivato(X),viaggio(Y,C1)),in(arrivato(Z),viaggio(Y,C2)),C):-
+	connesso(X,Z,C3),
+	C is C3+(C1-C2),!.
 
-
-%In viaggio il secondo, arriva il primo //controllare
-costo(in(arrivato(X),viaggio(Y,D1)),in(arrivato(Z),viaggio(Y,D2)),C):-connesso(X,Z,C1),C is C1+(D1-D2),!.
-
-%In viaggio il secondo, arriva il secondob //check
-costo(in(arrivato(X),viaggio(Y,C1)),in(viaggio(Z,C2),arrivato(Q)),C):-connesso(X,Z,C3),connesso(Y,Q,_C4),C is (C3-C2) + C1,!.
+%In viaggio il secondo, arriva il secondo
+costo(in(arrivato(X),viaggio(Y,C1)),in(viaggio(Z,C2),arrivato(Y)),C):-
+	connesso(X,Z,C3),
+	C is C1 + (C3-C2) ,!.
 
 %Partono entrambi da incrocio, il primo arriva a dest.
-costo(in(arrivato(X),arrivato(Y)),in(arrivato(Z),viaggio(Q,C1)),C):-connesso(X,Z,C2),connesso(Y,Q,C3),C is C2 + (C3-C1),!.
+costo(in(arrivato(X),arrivato(Y)),in(arrivato(Z),viaggio(Q,C1)),C):-
+	connesso(X,Z,C2),
+	connesso(Y,Q,C3),
+	C is C2 + (C3-C1),!.
 
 %Partono entrambi da incrocio, il secondo arriva a dest.
-costo(in(arrivato(X),arrivato(Y)),in(viaggio(Z,C1),arrivato(Q)),C):-connesso(X,Z,C2),connesso(Y,Q,C3),C is C3 + (C2-C1),!.
+costo(in(arrivato(X),arrivato(Y)),in(viaggio(Z,C1),arrivato(Q)),C):-
+	connesso(X,Z,C2),
+	connesso(Y,Q,C3),
+	C is C3 + (C2-C1),!.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 eq(in(X,Y),in(X,Y)).
-
 
 %Minimizzo il comando, non inserire punti dopo il nome dell'incrocio.
 
 risolvi(Z):-write('Stato primo gruppo: '),read(X),
 	    write('Stato secondo gruppo: '),read(Y),
 	    (sol(X,Y,Z)).
-%trovaSol(Z,Primo,Secondo):-solve(in(Primo,Secondo),Z).
-
 
 sol(X,Y,Z):-solve(in(arrivato(X),arrivato(Y)),Z).
 
@@ -186,10 +176,6 @@ sol(X,Y,Z):-solve(in(arrivato(X),arrivato(Y)),Z).
 sicuro(inc9).
 
 pericolo(inc3).
-
-traffico(inc1,inc2).
-traffico(inc4,inc1).
-traffico(inc1,inc5).
 
 connesso(inc1,inc2,5).
 connesso(inc1,inc5,8).
