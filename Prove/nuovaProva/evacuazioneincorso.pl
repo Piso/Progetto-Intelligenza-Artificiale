@@ -136,11 +136,6 @@ costo(in(arrivato(X),arrivato(Y)),in(arrivato(Z),arrivato(Y)),C):-
 costo(in(viaggio(X,C1),arrivato(Y)),in(arrivato(X),arrivato(Y)),C):-
 	C is C1,!.
 
-%Da incrocio a incrocio sia gruppo uno che gruppo due
-costo(in(arrivato(X),arrivato(Y)),in(arrivato(Z),arrivato(Q)),C):-
-	connesso(X,Z,C1),
-	connesso(Y,Q,C2),
-	C is C1 + C2,!.
 
 %In viaggio il primo gruppo, arriva primo gruppo
 costo(in(viaggio(X,C1),arrivato(Y)),in(arrivato(X),viaggio(Q,C2)),C):-
@@ -152,6 +147,11 @@ costo(in(viaggio(X,C1),arrivato(Y)),in(viaggio(X,C2),arrivato(Q)),C):-
 	connesso(Y,Q,C3),
 	C is C3+(C1-C2),!.
 
+%In viaggio il primo gruppo,arrivano entrambi
+costo(in(viaggio(X,C1),arrivato(Y)),in(arrivato(X),arrivato(Q))):-
+	connesso(Y,Q,C2),
+	C is C1 + C2,!.
+
 %In viaggio il secondo, arriva il primo
 costo(in(arrivato(X),viaggio(Y,C1)),in(arrivato(Z),viaggio(Y,C2)),C):-
 	connesso(X,Z,C3),
@@ -161,6 +161,11 @@ costo(in(arrivato(X),viaggio(Y,C1)),in(arrivato(Z),viaggio(Y,C2)),C):-
 costo(in(arrivato(X),viaggio(Y,C1)),in(viaggio(Z,C2),arrivato(Y)),C):-
 	connesso(X,Z,C3),
 	C is C1 + (C3-C2) ,!.
+
+%In viaggio il secondo, arrivano entrambi
+costo(in(arrivato(X),viaggio(Y,C1)),in(arrivato(Z),arrivato(Y)),C):-
+	connesso(X,Z,C2),
+	C is C1+C2,!.
 
 %Partono entrambi da incrocio, il primo arriva a dest.
 costo(in(arrivato(X),arrivato(Y)),in(arrivato(Z),viaggio(Q,C1)),C):-
@@ -173,6 +178,15 @@ costo(in(arrivato(X),arrivato(Y)),in(viaggio(Z,C1),arrivato(Q)),C):-
 	connesso(X,Z,C2),
 	connesso(Y,Q,C3),
 	C is C3 + (C2-C1),!.
+
+%Partono entrambi da incrocio, arrivano entrambi in incrocio
+costo(in(arrivato(X),arrivato(Y)),in(arrivato(Z),arrivato(Q)),C):-
+	connesso(X,Z,C1),
+	connesso(Y,Q,C2),
+	C is C1+C2.
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 

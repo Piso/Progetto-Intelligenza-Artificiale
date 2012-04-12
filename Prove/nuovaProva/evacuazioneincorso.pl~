@@ -203,7 +203,7 @@ connesso(inc6,inc7,2).
 connesso(inc6,inc8,5).
 connesso(inc7,inc10,3).
 connesso(inc8,inc9,2).
-connesso(inc10,inc9,5).
+connesso(inc10,inc9,1).
 
 
 connesso(inc2,inc1,5).
