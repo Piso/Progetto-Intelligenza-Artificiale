@@ -48,7 +48,6 @@ mossa(in(arrivato(X),arrivato(Q)),in(arrivato(Y),arrivato(Q))):-
 	sicuro(Q),!.
 
 %In viaggio il primo gruppo, arriva primo gruppo
-%
 
 mossa(in(viaggio(X,N),arrivato(Z)),in(arrivato(X),viaggio(Q,N2))):-
 	connesso(Z,Q,L),
@@ -60,26 +59,32 @@ mossa(in(viaggio(X,N),arrivato(Z)),in(viaggio(X,N2),arrivato(Q))):-
 	connesso(Z,Q,L),
 	N > L,
 	N2 is N-L,!.
+%in viaggio primo, secondo da inc, arrivano entrambi
+mossa(in(viaggio(X,N),arrivato(Z)),in(arrivato(X),arrivato(Q))):-
+	connesso(Z,Q,L),
+	N=:=L,!.
 
-%In viaggio il secondo, arriva il primo
+
+%Primo parte da incrocio,In viaggio il secondo, arriva il primo
 mossa(in(arrivato(X),viaggio(Q,N)),in(arrivato(Y),viaggio(Q,N2))):-
 	connesso(X,Y,L),
 	N > L,
 	N2 is N-L,!.
 
-%In viaggio il secondo, arriva il secondo
+%Primo parte da incrocio, secondo in viaggio, arrivano entrambi
+mossa(in(arrivato(X),viaggio(Q,_)),in(arrivato(Y),arrivato(Q))):-
+	connesso(X,Y,_),
+	sicuro(Y),
+	!.
+
+
+%primo parte da incrocio,In viaggio il secondo, arriva il secondo
 mossa(in(arrivato(X),viaggio(Q,N)),in(viaggio(Y,N2),arrivato(Q))):-
 	connesso(X,Y,L),
 	L > N,
 	N2 is L - N,!.
 
 
-%Partono entrambi da incrocio, il primo arriva a dest.
-mossa(in(arrivato(X),arrivato(Z)),in(arrivato(Y),viaggio(Q,N))):-
-      connesso(X,Y,L),
-      connesso(Z,Q,L2),
-      L2 > L,
-      N is L2 - L,!.
 
 %Partono entrambi da incrocio, il secondo arriva a dest.
 mossa(in(arrivato(X),arrivato(Z)),in(viaggio(Y,N),arrivato(Q))):-
@@ -88,11 +93,20 @@ mossa(in(arrivato(X),arrivato(Z)),in(viaggio(Y,N),arrivato(Q))):-
 	L > L2,
 	N is L-L2,!.
 
+%Partono entrambi da incrocio, il primo arriva a dest.
+mossa(in(arrivato(X),arrivato(Z)),in(arrivato(Y),viaggio(Q,N))):-
+      connesso(X,Y,L),
+      connesso(Z,Q,L2),
+      L2 > L,
+      N is L2 - L,!.
+
 %Partono entrambi da incrocio, arrivano entrambi in un incrocio
 mossa(in(arrrivato(X),arrivato(Y)),in(arrivato(Z),arrivato(Q))):-
 	connesso(X,Z,L1),
-	connesso(Y,Q,L2),
-	L1==L2,!.
+	connesso(Y,Q,L2).
+	%L1=:=L2,!.
+
+
 
 
 trovato(in(arrivato(Inc1),arrivato(Inc2))):-sicuro(Inc1),sicuro(Inc2).
