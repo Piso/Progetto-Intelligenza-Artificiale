@@ -52,7 +52,7 @@ mossa(in(arrivato(X),arrivato(Q)),in(arrivato(Y),arrivato(Q))):-
 mossa(in(viaggio(X,N),arrivato(Z)),in(arrivato(X),viaggio(Q,N2))):-
 	connesso(Z,Q,L),
 	L > N,
-	N2 is L-N,!.
+	N2 is L-N.
 
 %In viaggio il primo, arriva il secondo
 mossa(in(viaggio(X,N),arrivato(Z)),in(viaggio(X,N2),arrivato(Q))):-
@@ -69,21 +69,21 @@ mossa(in(viaggio(X,N),arrivato(Z)),in(arrivato(X),arrivato(Q))):-
 mossa(in(arrivato(X),viaggio(Q,N)),in(arrivato(Y),viaggio(Q,N2))):-
 	connesso(X,Y,L),
 	N > L,
-	N2 is N-L,!.
+	N2 is N-L.
 
-%Primo parte da incrocio, secondo in viaggio, arrivano entrambi
-mossa(in(arrivato(X),viaggio(Q,L)),in(arrivato(Y),arrivato(Q))):-
-	connesso(X,Y,N),
-	sicuro(Y),
-	L=:=N,!.
 
 
 %primo parte da incrocio,In viaggio il secondo, arriva il secondo
 mossa(in(arrivato(X),viaggio(Q,N)),in(viaggio(Y,N2),arrivato(Q))):-
 	connesso(X,Y,L),
 	L > N,
-	N2 is L - N,!.
+	N2 is L - N.
 
+%Primo parte da incrocio, secondo in viaggio, arrivano entrambi
+mossa(in(arrivato(X),viaggio(Q,L)),in(arrivato(Y),arrivato(Q))):-
+	connesso(X,Y,N),
+	sicuro(Y),
+	L=:=N,!.
 
 
 %Partono entrambi da incrocio, il secondo arriva a dest.
@@ -148,7 +148,7 @@ costo(in(viaggio(X,C1),arrivato(Y)),in(viaggio(X,C2),arrivato(Q)),C):-
 	C is C3+(C1-C2),!.
 
 %In viaggio il primo gruppo,arrivano entrambi
-costo(in(viaggio(X,C1),arrivato(Y)),in(arrivato(X),arrivato(Q))):-
+costo(in(viaggio(X,C1),arrivato(Y)),in(arrivato(X),arrivato(Q)),C):-
 	connesso(Y,Q,C2),
 	C is C1 + C2,!.
 
