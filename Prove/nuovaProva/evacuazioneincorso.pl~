@@ -148,7 +148,7 @@ costo(in(viaggio(X,C1),arrivato(Y)),in(viaggio(X,C2),arrivato(Q)),C):-
 	C is C3+(C1-C2),!.
 
 %In viaggio il primo gruppo,arrivano entrambi
-costo(in(viaggio(X,C1),arrivato(Y)),in(arrivato(X),arrivato(Q))):-
+costo(in(viaggio(X,C1),arrivato(Y)),in(arrivato(X),arrivato(Q)),C):-
 	connesso(Y,Q,C2),
 	C is C1 + C2,!.
 

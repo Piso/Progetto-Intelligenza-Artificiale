@@ -185,9 +185,6 @@ costo(in(arrivato(X),arrivato(Y)),in(arrivato(Z),arrivato(Q)),C):-
 	connesso(Y,Q,C2),
 	C is C1+C2.
 
-
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 eq(in(X,Y),in(X,Y)).

@@ -2,9 +2,11 @@
  
 TODO (dal piu' importante al meno importante):
 
-	-calcolare la distanza di manhattan
+	-calcolare la distanza di manhattan --> DONE
 	-inserire distanza euclidea e di manhattan come euristiche
-	-creare file "benchmark" tipo bruschi
+	-creato file "benchmark" --->evacuazioneincorsoUI.pl (secondo me da integrare)
+		----> Quasi fatto.
+
 	-testing di A*
 	-costraint e cazzate varie extra
 	-relazione
