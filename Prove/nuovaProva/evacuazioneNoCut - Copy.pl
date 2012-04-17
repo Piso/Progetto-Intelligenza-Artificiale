@@ -47,43 +47,44 @@ mossa(in(arrivato(X),arrivato(Q)),in(arrivato(Y),arrivato(Q))):-
 	connesso(X,Y,_),
 	sicuro(Q),!.
 
+mossa(in(arrivato(X),arrivato(X)),in(arrivato(Y),arrivato(Y))):-
+	connesso(X,Y,_).
+
 %In viaggio il primo gruppo, arriva primo gruppo
 
 mossa(in(viaggio(X,N),arrivato(Z)),in(arrivato(X),viaggio(Q,N2))):-
 	connesso(Z,Q,L),
 	L > N,
-	N2 is L-N,!.
+	N2 is L-N.
 
 %In viaggio il primo, arriva il secondo
 mossa(in(viaggio(X,N),arrivato(Z)),in(viaggio(X,N2),arrivato(Q))):-
 	connesso(Z,Q,L),
 	N > L,
-	N2 is N-L,!.
+	N2 is N-L.
+
 %in viaggio primo, secondo da inc, arrivano entrambi
 mossa(in(viaggio(X,N),arrivato(Z)),in(arrivato(X),arrivato(Q))):-
 	connesso(Z,Q,L),
 	N=:=L,!.
 
-
 %Primo parte da incrocio,In viaggio il secondo, arriva il primo
 mossa(in(arrivato(X),viaggio(Q,N)),in(arrivato(Y),viaggio(Q,N2))):-
 	connesso(X,Y,L),
 	N > L,
-	N2 is N-L,!.
+	N2 is N-L.
+
+%primo parte da incrocio,In viaggio il secondo, arriva il secondo
+mossa(in(arrivato(X),viaggio(Q,N)),in(viaggio(Y,N2),arrivato(Q))):-
+	connesso(X,Y,L),
+	L > N,
+	N2 is L - N.
 
 %Primo parte da incrocio, secondo in viaggio, arrivano entrambi
 mossa(in(arrivato(X),viaggio(Q,L)),in(arrivato(Y),arrivato(Q))):-
 	connesso(X,Y,N),
 	sicuro(Y),
 	L=:=N,!.
-
-
-%primo parte da incrocio,In viaggio il secondo, arriva il secondo
-mossa(in(arrivato(X),viaggio(Q,N)),in(viaggio(Y,N2),arrivato(Q))):-
-	connesso(X,Y,L),
-	L > N,
-	N2 is L - N,!.
-
 
 
 %Partono entrambi da incrocio, il secondo arriva a dest.

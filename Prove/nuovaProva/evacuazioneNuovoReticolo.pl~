@@ -47,6 +47,9 @@ mossa(in(arrivato(X),arrivato(Q)),in(arrivato(Y),arrivato(Q))):-
 	connesso(X,Y,_),
 	sicuro(Q),!.
 
+mossa(in(arrivato(X),arrivato(X)),in(arrivato(Y),arrivato(Y))):-
+	connesso(X,Y,_).
+
 %In viaggio il primo gruppo, arriva primo gruppo
 
 mossa(in(viaggio(X,N),arrivato(Z)),in(arrivato(X),viaggio(Q,N2))):-
@@ -199,38 +202,39 @@ risolvi(Z):-write('Stato primo gruppo: '),read(X),
 sol(X,Y,Z):-solve(in(arrivato(X),arrivato(Y)),Z).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-sicuro(inc9).
+sicuro(inc18).
 
 pericolo(inc3).
 
-connesso(inc1,inc2,5).
-connesso(inc1,inc5,8).
-connesso(inc1,inc3,6).
-connesso(inc1,inc4,1).
-connesso(inc2,inc5,4).
-connesso(inc3,inc6,5).
-connesso(inc4,inc3,8).
-connesso(inc5,inc7,3).
-connesso(inc6,inc7,2).
-connesso(inc6,inc8,5).
-connesso(inc7,inc10,3).
-connesso(inc8,inc9,2).
-connesso(inc10,inc9,1).
+connesso(inc1,inc2,4).
+connesso(inc1,inc5,4).
+connesso(inc2,inc3,3).
+connesso(inc2,inc6,4).
+connesso(inc3,inc4,3).
+connesso(inc3,inc10,6).
+connesso(inc4,inc7,4).
+connesso(inc5,inc6,4).
+connesso(inc5,inc8,3).
+connesso(inc6,inc9,3).
+connesso(inc7,inc11,3).
+connesso(inc8,inc9,4).
+connesso(inc8,inc13,5).
+connesso(inc9,inc10,3).
+connesso(inc9,inc14,5).
+connesso(inc10,inc11,3).
+connesso(inc10,inc15,5).
+connesso(inc11,inc12,3).
+connesso(inc11,inc16,5).
+connesso(inc12,inc17,5).
+connesso(inc13,inc14,4).
+connesso(inc13,inc18,6).
+connesso(inc14,inc15,3).
+connesso(inc14,inc19,6).
+connesso(inc15,inc16,3).
+connesso(inc16,inc17,3).
+%connesso(inc18,inc19,4).
 
-
-connesso(inc2,inc1,5).
-connesso(inc5,inc1,8).
-connesso(inc3,inc1,6).
-connesso(inc4,inc1,1).
-connesso(inc5,inc2,4).
-connesso(inc6,inc3,5).
-connesso(inc3,inc4,8).
-connesso(inc7,inc5,3).
-connesso(inc7,inc6,2).
-connesso(inc8,inc6,5).
-connesso(inc10,inc7,3).
-%connesso(inc9,inc8,2).
-%connesso(inc10,inc9,1).
+%Da fare i reciproci
 
 
 
