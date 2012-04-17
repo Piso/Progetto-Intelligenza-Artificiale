@@ -15,7 +15,8 @@ pred connesso(incrocio,incrocio,int).
 pred mossa(stato,stato).
 pred vicini(stato,list(stato)).
 
-
+pred distMan(incrocio,int).
+pred distEuc(incrocio,int).
 
 
 pred agibile(incrocio,incrocio).
@@ -28,24 +29,24 @@ agibile(X,Y):-connesso(X,Y,_),not(pericolo(Y)).
 %primo gruppo arrivato al sicuro, secondo gruppo in viaggio
 
 mossa(in(arrivato(X),viaggio(Q,_)),in(arrivato(X),arrivato(Q))):-
-	sicuro(X),!.
+	sicuro(X).
 
 %secondo gruppo arrivato al sicuro, primo gruppo in viaggio
 
 mossa(in(viaggio(X,_),arrivato(Q)),in(arrivato(X),arrivato(Q))):-
-	sicuro(Q),!.
+	sicuro(Q).
 
 %primo gruppo al sicuro, secondo in incrocio
 
 mossa(in(arrivato(X),arrivato(Q)),in(arrivato(X),arrivato(Z))):-
 	connesso(Q,Z,_),
-	sicuro(X),!.
+	sicuro(X).
 
 %secondo gruppo al sicuro,primo in incrocio
 
 mossa(in(arrivato(X),arrivato(Q)),in(arrivato(Y),arrivato(Q))):-
 	connesso(X,Y,_),
-	sicuro(Q),!.
+	sicuro(Q).
 
 mossa(in(arrivato(X),arrivato(X)),in(arrivato(Y),arrivato(Y))):-
 	connesso(X,Y,_).
@@ -232,6 +233,7 @@ connesso(inc14,inc15,3).
 connesso(inc14,inc19,6).
 connesso(inc15,inc16,3).
 connesso(inc16,inc17,3).
+
 %connesso(inc18,inc19,4).
 
 %Da fare i reciproci
@@ -267,6 +269,54 @@ connesso(inc19,inc18,4).
 
 
 
+%%Distanze euclidee%%
+%
+distEuc(inc1,180).
+distEuc(inc2,184).
+distEuc(inc3,193).
+distEuc(inc4,205).
+distEuc(inc5,140).
+distEuc(inc6,145).
+distEuc(inc7,172).
+distEuc(inc8,110).
+distEuc(inc9,117).
+distEuc(inc10,130).
+distEuc(inc11,148).
+distEuc(inc12,170).
+distEuc(inc13,60).
+distEuc(inc14,72).
+distEuc(inc15,92).
+distEuc(inc16,116).
+distEuc(inc17,143).
+distEuc(inc18,0). %OVVIO
+distEuc(inc19,40).
+%
+%%%%%%%%%%%%%%%%%%%%
+
+
+%%Distanze Manhattan%%
+%
+distMan(inc1,180).
+distMan(inc2,220).
+distMan(inc3,250).
+distMan(inc4,280).
+distMan(inc5,140).
+distMan(inc6,180).
+distMan(inc7,240).
+distMan(inc8,110).
+distMan(inc9,150).
+distMan(inc10,180).
+distMan(inc11,210).
+distMan(inc12,240).
+distMan(inc13,60).
+distMan(inc14,100).
+distMan(inc15,130).
+distMan(inc16,160).
+distMan(inc17,190).
+distMan(inc18,0). %OVVIO
+distMan(inc19,40).
+%
+%%%%%%%%%%%%%%%%%%%%
 
 
 

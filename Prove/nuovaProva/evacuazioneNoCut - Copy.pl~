@@ -244,12 +244,12 @@ connesso(inc10,inc7,3).
 
 pred percorso(stato,stato,costo).
 
-percorso(X):-
+percorso(X,C):-
 	get_time(T1),
 	sol(inc1,inc4,X),
 	get_time(T2),
 	writeln('----------'),
-	%maplist(write,['Costo del Tragitto: ',C,'\n']),
+	maplist(write,['Costo del Tragitto: ',C,'\n']),
 	writeln('-----'),
 	%maplist(writeln,RPath),
 	writeln('-----'),
