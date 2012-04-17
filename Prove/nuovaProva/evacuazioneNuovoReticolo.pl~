@@ -1,5 +1,5 @@
 :-use_module('types/chk').
-:-consult(best_first).
+:-consult(astar).
 
 type list(El) -->[]; [El|list(El)].
 type incrocio --> inc1;inc2;inc3;inc4;inc5;inc6;inc7;inc8;inc9;inc10.
