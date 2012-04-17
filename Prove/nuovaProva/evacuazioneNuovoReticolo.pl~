@@ -46,7 +46,7 @@ mossa(in(arrivato(X),arrivato(Q)),in(arrivato(X),arrivato(Z))):-
 
 mossa(in(arrivato(X),arrivato(Q)),in(arrivato(Y),arrivato(Q))):-
 	connesso(X,Y,_),
-	sicuro(Q),!.
+	sicuro(Q).
 
 mossa(in(arrivato(X),arrivato(X)),in(arrivato(Y),arrivato(Y))):-
 	connesso(X,Y,_).

@@ -242,17 +242,17 @@ connesso(inc10,inc7,3).
 %
 :-use_module(library(time)).
 
-pred percorso(stato,stato,costo).
+pred percorso(incrocio,incrocio,incrocio).
 
-percorso(X):-
+percorso(X,Y,Z):-
 	get_time(T1),
-	sol(inc1,inc4,X),
+	sol(X,Y,Z),
 	get_time(T2),
-	writeln('----------'),
+	writeln('-----'),
 	%maplist(write,['Costo del Tragitto: ',C,'\n']),
-	writeln('-----'),
+	%writeln('-----'),
 	%maplist(writeln,RPath),
-	writeln('-----'),
+	%writeln('-----'),
 	T is T2-T1,
 	write('Tempo di Computazione: '),
 	write(T),writeln('sec.'),
