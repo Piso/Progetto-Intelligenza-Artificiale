@@ -1,5 +1,5 @@
 :-use_module('types/chk').
-:-consult(astar).
+:-consult(breadth).
 
 type list(El) -->[]; [El|list(El)].
 type incrocio --> inc1;inc2;inc3;inc4;inc5;inc6;inc7;inc8;inc9;inc10.
@@ -186,15 +186,12 @@ costo(in(arrivato(X),arrivato(Y)),in(arrivato(Z),arrivato(Q)),C):-
 	connesso(X,Z,C1),
 	connesso(Y,Q,C2),
 	C is C1+C2.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%	EURISTICA
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 h(in(arrivato(X),arrivato(Y)),H):-distEuc(X,D1),distEuc(Y,D2),H is D1 + D2.
 h(in(arrivato(X),viaggio(Y,L)),H):-distEuc(X,D1),distEuc(Y,D2),H is D1 +(D2-L).
 h(in(viaggio(X,L),arrivato(Y)),H):-distEuc(Y,D1),distEuc(X,D2),H is D1 +(D2-L).
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
