@@ -19,12 +19,11 @@ pred distMan(incrocio,int).
 pred distEuc(incrocio,int).
 
 
-pred agibile(incrocio,incrocio).
+pred agibile(incrocio,incrocio,in).
 pred pericolo(incrocio).
 pred traffico(incrocio,incrocio).
 
 
-agibile(X,Y):-connesso(X,Y,_),not(pericolo(Y)).
 
 pred coefficiente1(int). %coefficiente dato dai costraint al gruppo 1
 pred coefficiente2(int).
@@ -43,76 +42,78 @@ mossa(in(viaggio(X,_),arrivato(Q)),in(arrivato(X),arrivato(Q))):-
 %primo gruppo al sicuro, secondo in incrocio
 
 mossa(in(arrivato(X),arrivato(Q)),in(arrivato(X),arrivato(Z))):-
-	connesso(Q,Z,_),
+	agibile(Q,Z,_),
 	sicuro(X).
 
 %secondo gruppo al sicuro,primo in incrocio
 
 mossa(in(arrivato(X),arrivato(Q)),in(arrivato(Y),arrivato(Q))):-
-	connesso(X,Y,_),
+	agibile(X,Y,_),
 	sicuro(Q).
 
 mossa(in(arrivato(X),arrivato(X)),in(arrivato(Y),arrivato(Y))):-
-	connesso(X,Y,_).
+	agibile(X,Y,_).
 
 %In viaggio il primo gruppo, arriva primo gruppo
 
 mossa(in(viaggio(X,N),arrivato(Z)),in(arrivato(X),viaggio(Q,N2))):-
-	connesso(Z,Q,L),
+	agibile(Z,Q,L),
 	L > N,
 	N2 is L-N.
 
 %In viaggio il primo, arriva il secondo
 mossa(in(viaggio(X,N),arrivato(Z)),in(viaggio(X,N2),arrivato(Q))):-
-	connesso(Z,Q,L),
+	agibile(Z,Q,L),
 	N > L,
 	N2 is N-L.
 
 %in viaggio primo, secondo da inc, arrivano entrambi
 mossa(in(viaggio(X,N),arrivato(Z)),in(arrivato(X),arrivato(Q))):-
-	connesso(Z,Q,L),
+	agibile(Z,Q,L),
 	N=:=L,!.
 
 %Primo parte da incrocio,In viaggio il secondo, arriva il primo
 mossa(in(arrivato(X),viaggio(Q,N)),in(arrivato(Y),viaggio(Q,N2))):-
-	connesso(X,Y,L),
+	agibile(X,Y,L),
 	N > L,
 	N2 is N-L.
 
 %primo parte da incrocio,In viaggio il secondo, arriva il secondo
 mossa(in(arrivato(X),viaggio(Q,N)),in(viaggio(Y,N2),arrivato(Q))):-
-	connesso(X,Y,L),
+	agibile(X,Y,L),
 	L > N,
 	N2 is L - N.
 
 %Primo parte da incrocio, secondo in viaggio, arrivano entrambi
 mossa(in(arrivato(X),viaggio(Q,L)),in(arrivato(Y),arrivato(Q))):-
-	connesso(X,Y,N),
+	agibile(X,Y,N),
 	sicuro(Y),
 	L=:=N,!.
 
 
 %Partono entrambi da incrocio, il secondo arriva a dest.
 mossa(in(arrivato(X),arrivato(Z)),in(viaggio(Y,N),arrivato(Q))):-
-	connesso(X,Y,L),
-	connesso(Z,Q,L2),
+	agibile(X,Y,L),
+	agibile(Z,Q,L2),
 	L > L2,
 	N is L-L2.
 
 %Partono entrambi da incrocio, il primo arriva a dest.
 mossa(in(arrivato(X),arrivato(Z)),in(arrivato(Y),viaggio(Q,N))):-
-      connesso(X,Y,L),
-      connesso(Z,Q,L2),
+      agibile(X,Y,L),
+      agibile(Z,Q,L2),
       L2 > L,
       N is L2 - L.
 
 %Partono entrambi da incrocio, arrivano entrambi in un incrocio
 mossa(in(arrrivato(X),arrivato(Y)),in(arrivato(Z),arrivato(Q))):-
-	connesso(X,Z,L1),
-	connesso(Y,Q,L2),
+	agibile(X,Z,L1),
+	agibile(Y,Q,L2),
 	L1=:=L2,!.
 
 
+
+agibile(X,Y,L):-connesso(X,Y,L),not(pericolo(Y)).
 
 trovato(in(arrivato(Inc1),arrivato(Inc2))):-sicuro(Inc1),sicuro(Inc2).
 
@@ -220,7 +221,7 @@ sol(X,Y,Z):-solve(in(arrivato(X),arrivato(Y)),Z).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sicuro(inc18).
 
-pericolo(inc3).
+pericolo(inc14).
 
 connesso(inc1,inc2,40).
 connesso(inc1,inc5,40).
