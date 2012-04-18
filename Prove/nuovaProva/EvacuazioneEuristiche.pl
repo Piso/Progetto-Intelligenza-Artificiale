@@ -253,11 +253,11 @@ sol(X,Y,Z):-solve(in(arrivato(X),arrivato(Y)),Z).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sicuro(inc18).
 
-traffico(_,_,0).
+traffico(_,_,1).
 
-equip(0,0).
+equip(1,1).
 
-meteo(0).
+meteo(1).
 
 pericolo(inc14).
 

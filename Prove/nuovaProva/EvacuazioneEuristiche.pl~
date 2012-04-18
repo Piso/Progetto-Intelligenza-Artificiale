@@ -142,8 +142,9 @@ vicini(_Stat,[]).
 
 %primo al sicuro,secondo in incrocio
 costo(in(arrivato(X),arrivato(Y)),in(arrivato(X),arrivato(Q)),C):-
+	coefficiente2(Y,Q,K),
 	connesso(Y,Q,C2),
-	C is C2,!.
+	C is C2 + K,!.
 
 %primo al sicuro, due in viaggio.
 costo(in(arrivato(X),viaggio(Y,C1)),in(arrivato(X),arrivato(Y)),C):-
@@ -151,8 +152,9 @@ costo(in(arrivato(X),viaggio(Y,C1)),in(arrivato(X),arrivato(Y)),C):-
 
 %secondo al sicuro,primo in incrocio
 costo(in(arrivato(X),arrivato(Y)),in(arrivato(Z),arrivato(Y)),C):-
+	coefficiente1(X,Z,K),
 	connesso(X,Z,C2),
-	C is C2,!.
+	C is C2 + K,!.
 
 %Gruppo due arrivato al sicuro, uno in viaggio.
 costo(in(viaggio(X,C1),arrivato(Y)),in(arrivato(X),arrivato(Y)),C):-
@@ -161,51 +163,65 @@ costo(in(viaggio(X,C1),arrivato(Y)),in(arrivato(X),arrivato(Y)),C):-
 
 %In viaggio il primo gruppo, arriva primo gruppo
 costo(in(viaggio(X,C1),arrivato(Y)),in(arrivato(X),viaggio(Q,C2)),C):-
+	coefficiente2(Y,Q,K),
 	connesso(Y,Q,C3),
-	C is C1+(C3-C2),!.
+	C is C1 + (C3-C2) + K,!.
 
 %In viaggio il primo gruppo, arriva il secondo
 costo(in(viaggio(X,C1),arrivato(Y)),in(viaggio(X,C2),arrivato(Q)),C):-
+        coefficiente2(Y,Q,K),
 	connesso(Y,Q,C3),
-	C is C3+(C1-C2),!.
+	C is C3 + (C1-C2) + K,!.
 
 %In viaggio il primo gruppo,arrivano entrambi
 costo(in(viaggio(X,C1),arrivato(Y)),in(arrivato(X),arrivato(Q)),C):-
+	coefficiente2(Y,Q,K),
 	connesso(Y,Q,C2),
-	C is C1 + C2,!.
+	C is C1 + C2 + K,!.
 
 %In viaggio il secondo, arriva il primo
 costo(in(arrivato(X),viaggio(Y,C1)),in(arrivato(Z),viaggio(Y,C2)),C):-
+        coefficiente1(X,Z,K),
 	connesso(X,Z,C3),
-	C is C3+(C1-C2),!.
+	C is C3 + (C1-C2) + K,!.
 
 %In viaggio il secondo, arriva il secondo
 costo(in(arrivato(X),viaggio(Y,C1)),in(viaggio(Z,C2),arrivato(Y)),C):-
+	coefficiente1(X,Z,K),
 	connesso(X,Z,C3),
-	C is C1 + (C3-C2) ,!.
+	C is C1 + (C3-C2) + K,!.
 
 %In viaggio il secondo, arrivano entrambi
 costo(in(arrivato(X),viaggio(Y,C1)),in(arrivato(Z),arrivato(Y)),C):-
+	coefficiente1(X,Z,K),
 	connesso(X,Z,C2),
-	C is C1+C2,!.
+	C is C1 + C2 + K,!.
 
 %Partono entrambi da incrocio, il primo arriva a dest.
 costo(in(arrivato(X),arrivato(Y)),in(arrivato(Z),viaggio(Q,C1)),C):-
+	coefficiente1(X,Z,K1),
+	coefficiente2(Y,Q,K2),
 	connesso(X,Z,C2),
 	connesso(Y,Q,C3),
-	C is C2 + (C3-C1),!.
+	C is C2 + (C3-C1) + K1 + K2,!.
 
 %Partono entrambi da incrocio, il secondo arriva a dest.
 costo(in(arrivato(X),arrivato(Y)),in(viaggio(Z,C1),arrivato(Q)),C):-
+	coefficiente1(X,Z,K1),
+	coefficiente2(Y,Q,K2),
 	connesso(X,Z,C2),
 	connesso(Y,Q,C3),
-	C is C3 + (C2-C1),!.
+	C is C3 + (C2-C1) + K1 + K2,!.
 
 %Partono entrambi da incrocio, arrivano entrambi in incrocio
 costo(in(arrivato(X),arrivato(Y)),in(arrivato(Z),arrivato(Q)),C):-
+	coefficiente1(X,Z,K1),
+	coefficiente2(Y,Q,K2),
 	connesso(X,Z,C1),
 	connesso(Y,Q,C2),
-	C is C1+C2.
+	C is C1 + C2 + K1 + K2.
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %	EURISTICA
@@ -237,11 +253,11 @@ sol(X,Y,Z):-solve(in(arrivato(X),arrivato(Y)),Z).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sicuro(inc18).
 
-traffico(_,_,0).
+traffico(_,_,1).
 
 equip(0,0).
 
-meteo(0).
+meteo(1).
 
 pericolo(inc14).
 
