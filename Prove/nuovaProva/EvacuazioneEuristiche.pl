@@ -26,6 +26,10 @@ pred traffico(incrocio,incrocio).
 
 agibile(X,Y):-connesso(X,Y,_),not(pericolo(Y)).
 
+pred coefficiente1(int). %coefficiente dato dai costraint al gruppo 1
+pred coefficiente2(int).
+pred coefficienteMeteo(int).
+
 %primo gruppo arrivato al sicuro, secondo gruppo in viaggio
 
 mossa(in(arrivato(X),viaggio(Q,_)),in(arrivato(X),arrivato(Q))):-
@@ -107,7 +111,6 @@ mossa(in(arrrivato(X),arrivato(Y)),in(arrivato(Z),arrivato(Q))):-
 	connesso(X,Z,L1),
 	connesso(Y,Q,L2),
 	L1=:=L2,!.
-
 
 
 
@@ -219,64 +222,64 @@ sicuro(inc18).
 
 pericolo(inc3).
 
-connesso(inc1,inc2,4).
-connesso(inc1,inc5,4).
-connesso(inc2,inc3,3).
-connesso(inc2,inc6,4).
-connesso(inc3,inc4,3).
-connesso(inc3,inc10,6).
-connesso(inc4,inc7,4).
-connesso(inc5,inc6,4).
-connesso(inc5,inc8,3).
-connesso(inc6,inc9,3).
-connesso(inc7,inc11,3).
-connesso(inc8,inc9,4).
-connesso(inc8,inc13,5).
-connesso(inc9,inc10,3).
-connesso(inc9,inc14,5).
-connesso(inc10,inc11,3).
-connesso(inc10,inc15,5).
-connesso(inc11,inc12,3).
-connesso(inc11,inc16,5).
-connesso(inc12,inc17,5).
-connesso(inc13,inc14,4).
-connesso(inc13,inc18,6).
-connesso(inc14,inc15,3).
-connesso(inc14,inc19,6).
-connesso(inc15,inc16,3).
-connesso(inc16,inc17,3).
+connesso(inc1,inc2,40).
+connesso(inc1,inc5,40).
+connesso(inc2,inc3,30).
+connesso(inc2,inc6,40).
+connesso(inc3,inc4,30).
+connesso(inc3,inc10,60).
+connesso(inc4,inc7,40).
+connesso(inc5,inc6,40).
+connesso(inc5,inc8,30).
+connesso(inc6,inc9,30).
+connesso(inc7,inc11,30).
+connesso(inc8,inc9,40).
+connesso(inc8,inc13,50).
+connesso(inc9,inc10,30).
+connesso(inc9,inc14,50).
+connesso(inc10,inc11,30).
+connesso(inc10,inc15,50).
+connesso(inc11,inc12,30).
+connesso(inc11,inc16,50).
+connesso(inc12,inc17,50).
+connesso(inc13,inc14,40).
+connesso(inc13,inc18,60).
+connesso(inc14,inc15,30).
+connesso(inc14,inc19,60).
+connesso(inc15,inc16,30).
+connesso(inc16,inc17,30).
 
 %connesso(inc18,inc19,4).
 
 %Da fare i reciproci
 
-connesso(inc2,inc1,4).
-connesso(inc5,inc1,4).
-connesso(inc3,inc2,3).
-connesso(inc6,inc2,4).
-connesso(inc4,inc3,3).
-connesso(inc10,inc3,6).
-connesso(inc7,inc4,4).
-connesso(inc6,inc5,4).
-connesso(inc8,inc5,3).
-connesso(inc9,inc6,3).
-connesso(inc11,inc7,3).
-connesso(inc9,inc8,4).
-connesso(inc13,inc8,5).
-connesso(inc10,inc9,3).
-connesso(inc14,inc9,5).
-connesso(inc11,inc10,3).
-connesso(inc15,inc10,5).
-connesso(inc12,inc11,3).
-connesso(inc16,inc11,5).
-connesso(inc17,inc12,5).
-connesso(inc14,inc13,4).
-connesso(inc18,inc13,6).
-connesso(inc15,inc14,3).
-connesso(inc19,inc14,6).
-connesso(inc16,inc15,3).
-connesso(inc17,inc16,3).
-connesso(inc19,inc18,4).
+connesso(inc2,inc1,40).
+connesso(inc5,inc1,40).
+connesso(inc3,inc2,30).
+connesso(inc6,inc2,40).
+connesso(inc4,inc3,30).
+connesso(inc10,inc3,60).
+connesso(inc7,inc4,40).
+connesso(inc6,inc5,40).
+connesso(inc8,inc5,30).
+connesso(inc9,inc6,30).
+connesso(inc11,inc7,30).
+connesso(inc9,inc8,40).
+connesso(inc13,inc8,50).
+connesso(inc10,inc9,30).
+connesso(inc14,inc9,50).
+connesso(inc11,inc10,30).
+connesso(inc15,inc10,50).
+connesso(inc12,inc11,30).
+connesso(inc16,inc11,50).
+connesso(inc17,inc12,50).
+connesso(inc14,inc13,40).
+connesso(inc18,inc13,60).
+connesso(inc15,inc14,30).
+connesso(inc19,inc14,60).
+connesso(inc16,inc15,30).
+connesso(inc17,inc16,30).
+connesso(inc19,inc18,40).
 
 
 
