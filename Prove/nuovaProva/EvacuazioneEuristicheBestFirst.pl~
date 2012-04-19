@@ -22,12 +22,16 @@ pred distEuc(incrocio,int).
 pred agibile(incrocio,incrocio,in).
 pred pericolo(incrocio).
 pred traffico(incrocio,incrocio,int).
+pred equip(int,int). %coeff equip group1 & group2
+pred meteo(int).
 
 
+pred coefficiente1(incrocio,incrocio,int). %coefficiente constraint gruppo 1
+pred coefficiente2(incrocio,incrocio,int).
 
-pred coefficiente1(int). %coefficiente dato dai costraint al gruppo 1
-pred coefficiente2(int).
-pred coefficienteMeteo(int).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+coefficiente1(X,Y,C):-traffico(X,Y,T),equip(E1,_),meteo(M),C is T + E1 + M.
+coefficiente2(X,Y,C):-traffico(X,Y,T),equip(_,E2),meteo(M),C is T + E2 + M.
 
 %primo gruppo arrivato al sicuro, secondo gruppo in viaggio
 
@@ -57,59 +61,71 @@ mossa(in(arrivato(X),arrivato(X)),in(arrivato(Y),arrivato(Y))):-
 %In viaggio il primo gruppo, arriva primo gruppo
 
 mossa(in(viaggio(X,N),arrivato(Z)),in(arrivato(X),viaggio(Q,N2))):-
+	coefficiente2(Z,Q,C),
 	agibile(Z,Q,L),
-	L > N,
-	N2 is L-N.
+	(L+C) > N,
+	N2 is (L+C)-N.
 
 %In viaggio il primo, arriva il secondo
 mossa(in(viaggio(X,N),arrivato(Z)),in(viaggio(X,N2),arrivato(Q))):-
+	coefficiente2(Z,Q,C),
 	agibile(Z,Q,L),
-	N > L,
-	N2 is N-L.
+	N > (L+C),
+	N2 is N-(L+C).
 
 %in viaggio primo, secondo da inc, arrivano entrambi
 mossa(in(viaggio(X,N),arrivato(Z)),in(arrivato(X),arrivato(Q))):-
+	coefficiente2(Z,Q,C),
 	agibile(Z,Q,L),
-	N=:=L,!.
+	N=:=(L+C),!.
 
 %Primo parte da incrocio,In viaggio il secondo, arriva il primo
 mossa(in(arrivato(X),viaggio(Q,N)),in(arrivato(Y),viaggio(Q,N2))):-
+	coefficiente1(X,Y,C),
 	agibile(X,Y,L),
-	N > L,
-	N2 is N-L.
+	N > (L+C),
+	N2 is N-(L+C).
 
 %primo parte da incrocio,In viaggio il secondo, arriva il secondo
 mossa(in(arrivato(X),viaggio(Q,N)),in(viaggio(Y,N2),arrivato(Q))):-
+	coefficiente1(X,Y,C),
 	agibile(X,Y,L),
-	L > N,
-	N2 is L - N.
+	(L+C) > N,
+	N2 is (L+C) - N.
 
 %Primo parte da incrocio, secondo in viaggio, arrivano entrambi
 mossa(in(arrivato(X),viaggio(Q,L)),in(arrivato(Y),arrivato(Q))):-
+	coefficiente1(X,Y,C),
 	agibile(X,Y,N),
 	sicuro(Y),
-	L=:=N,!.
+	(L+C)=:=N,!.
 
 
 %Partono entrambi da incrocio, il secondo arriva a dest.
 mossa(in(arrivato(X),arrivato(Z)),in(viaggio(Y,N),arrivato(Q))):-
+	coefficiente1(X,Y,C1),
+	coefficiente2(Z,Q,C2),
 	agibile(X,Y,L),
 	agibile(Z,Q,L2),
-	L > L2,
-	N is L-L2.
+	(L+C1) > (L2+C2),
+	N is (L+C1)-(L2+C2).
 
 %Partono entrambi da incrocio, il primo arriva a dest.
 mossa(in(arrivato(X),arrivato(Z)),in(arrivato(Y),viaggio(Q,N))):-
+      coefficiente1(X,Y,C1),
+      coefficiente2(Z,Q,C2),
       agibile(X,Y,L),
       agibile(Z,Q,L2),
-      L2 > L,
-      N is L2 - L.
+      (L2+C2) > (L+C1),
+      N is (L2+C2) - (L+C1).
 
 %Partono entrambi da incrocio, arrivano entrambi in un incrocio
 mossa(in(arrrivato(X),arrivato(Y)),in(arrivato(Z),arrivato(Q))):-
-	agibile(X,Z,L1),
-	agibile(Y,Q,L2),
-	L1=:=L2,!.
+      coefficiente1(X,Y,C1),
+      coefficiente2(Z,Q,C2),
+      agibile(X,Z,L1),
+      agibile(Y,Q,L2),
+      (L1+C1)=:=(L2+C2),!.
 
 
 
@@ -126,8 +142,9 @@ vicini(_Stat,[]).
 
 %primo al sicuro,secondo in incrocio
 costo(in(arrivato(X),arrivato(Y)),in(arrivato(X),arrivato(Q)),C):-
+	coefficiente2(Y,Q,K),
 	connesso(Y,Q,C2),
-	C is C2,!.
+	C is C2 + K,!.
 
 %primo al sicuro, due in viaggio.
 costo(in(arrivato(X),viaggio(Y,C1)),in(arrivato(X),arrivato(Y)),C):-
@@ -135,8 +152,9 @@ costo(in(arrivato(X),viaggio(Y,C1)),in(arrivato(X),arrivato(Y)),C):-
 
 %secondo al sicuro,primo in incrocio
 costo(in(arrivato(X),arrivato(Y)),in(arrivato(Z),arrivato(Y)),C):-
+	coefficiente1(X,Z,K),
 	connesso(X,Z,C2),
-	C is C2,!.
+	C is C2 + K,!.
 
 %Gruppo due arrivato al sicuro, uno in viaggio.
 costo(in(viaggio(X,C1),arrivato(Y)),in(arrivato(X),arrivato(Y)),C):-
@@ -145,55 +163,69 @@ costo(in(viaggio(X,C1),arrivato(Y)),in(arrivato(X),arrivato(Y)),C):-
 
 %In viaggio il primo gruppo, arriva primo gruppo
 costo(in(viaggio(X,C1),arrivato(Y)),in(arrivato(X),viaggio(Q,C2)),C):-
+	coefficiente2(Y,Q,K),
 	connesso(Y,Q,C3),
-	C is C1+(C3-C2),!.
+	C is C1 + (C3-C2) + K,!.
 
 %In viaggio il primo gruppo, arriva il secondo
 costo(in(viaggio(X,C1),arrivato(Y)),in(viaggio(X,C2),arrivato(Q)),C):-
+        coefficiente2(Y,Q,K),
 	connesso(Y,Q,C3),
-	C is C3+(C1-C2),!.
+	C is C3 + (C1-C2) + K,!.
 
 %In viaggio il primo gruppo,arrivano entrambi
 costo(in(viaggio(X,C1),arrivato(Y)),in(arrivato(X),arrivato(Q)),C):-
+	coefficiente2(Y,Q,K),
 	connesso(Y,Q,C2),
-	C is C1 + C2,!.
+	C is C1 + C2 + K,!.
 
 %In viaggio il secondo, arriva il primo
 costo(in(arrivato(X),viaggio(Y,C1)),in(arrivato(Z),viaggio(Y,C2)),C):-
+        coefficiente1(X,Z,K),
 	connesso(X,Z,C3),
-	C is C3+(C1-C2),!.
+	C is C3 + (C1-C2) + K,!.
 
 %In viaggio il secondo, arriva il secondo
 costo(in(arrivato(X),viaggio(Y,C1)),in(viaggio(Z,C2),arrivato(Y)),C):-
+	coefficiente1(X,Z,K),
 	connesso(X,Z,C3),
-	C is C1 + (C3-C2) ,!.
+	C is C1 + (C3-C2) + K,!.
 
 %In viaggio il secondo, arrivano entrambi
 costo(in(arrivato(X),viaggio(Y,C1)),in(arrivato(Z),arrivato(Y)),C):-
+	coefficiente1(X,Z,K),
 	connesso(X,Z,C2),
-	C is C1+C2,!.
+	C is C1 + C2 + K,!.
 
 %Partono entrambi da incrocio, il primo arriva a dest.
 costo(in(arrivato(X),arrivato(Y)),in(arrivato(Z),viaggio(Q,C1)),C):-
+	coefficiente1(X,Z,K1),
+	coefficiente2(Y,Q,K2),
 	connesso(X,Z,C2),
 	connesso(Y,Q,C3),
-	C is C2 + (C3-C1),!.
+	C is C2 + (C3-C1) + K1 + K2,!.
 
 %Partono entrambi da incrocio, il secondo arriva a dest.
 costo(in(arrivato(X),arrivato(Y)),in(viaggio(Z,C1),arrivato(Q)),C):-
+	coefficiente1(X,Z,K1),
+	coefficiente2(Y,Q,K2),
 	connesso(X,Z,C2),
 	connesso(Y,Q,C3),
-	C is C3 + (C2-C1),!.
+	C is C3 + (C2-C1) + K1 + K2,!.
 
 %Partono entrambi da incrocio, arrivano entrambi in incrocio
 costo(in(arrivato(X),arrivato(Y)),in(arrivato(Z),arrivato(Q)),C):-
+	coefficiente1(X,Z,K1),
+	coefficiente2(Y,Q,K2),
 	connesso(X,Z,C1),
 	connesso(Y,Q,C2),
-	C is C1+C2.
+	C is C1 + C2 + K1 + K2.
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                             %
-%	EURISTICA             %
-%                             %
+%
+%	EURISTICA
+%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %h(in(arrivato(X),arrivato(Y)),H):-distEuc(X,D1),distEuc(Y,D2),H is D1 + D2.
@@ -220,6 +252,12 @@ sol(X,Y,Z):-solve(in(arrivato(X),arrivato(Y)),Z).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 sicuro(inc18).
+
+traffico(_,_,1).
+
+equip(1,1).
+
+meteo(1).
 
 pericolo(inc14).
 
