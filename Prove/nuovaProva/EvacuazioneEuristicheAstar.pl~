@@ -228,14 +228,14 @@ costo(in(arrivato(X),arrivato(Y)),in(arrivato(Z),arrivato(Q)),C):-
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%h(in(arrivato(X),arrivato(Y)),H):-distEuc(X,D1),distEuc(Y,D2),H is D1 + D2.
-%h(in(arrivato(X),viaggio(Y,L)),H):-distEuc(X,D1),distEuc(Y,D2),H is D1 +(D2-L).
-%h(in(viaggio(X,L),arrivato(Y)),H):-distEuc(Y,D1),distEuc(X,D2),H is D1 +(D2-L).
+h(in(arrivato(X),arrivato(Y)),H):-distEuc(X,D1),distEuc(Y,D2),H is D1 + D2.
+h(in(arrivato(X),viaggio(Y,L)),H):-distEuc(X,D1),distEuc(Y,D2),H is D1 +(D2-L).
+h(in(viaggio(X,L),arrivato(Y)),H):-distEuc(Y,D1),distEuc(X,D2),H is D1 +(D2-L).
 
 
-h(in(arrivato(X),arrivato(Y)),H):-distMan(X,D1),distMan(Y,D2),H is D1 + D2.
-h(in(arrivato(X),viaggio(Y,L)),H):-distMan(X,D1),distMan(Y,D2),H is D1 +(D2-L).
-h(in(viaggio(X,L),arrivato(Y)),H):-distMan(Y,D1),distMan(X,D2),H is D1 +(D2-L).
+ %h(in(arrivato(X),arrivato(Y)),H):-distMan(X,D1),distMan(Y,D2),H is D1 + D2.
+ %h(in(arrivato(X),viaggio(Y,L)),H):-distMan(X,D1),distMan(Y,D2),H is D1 +(D2-L).
+ %h(in(viaggio(X,L),arrivato(Y)),H):-distMan(Y,D1),distMan(X,D2),H is D1 +(D2-L).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -376,6 +376,7 @@ distMan(inc19,40).
 %%%%%%%%%%%inizio prova%%%%%%%%%%%%%%%%%
 %
 :-use_module(library(time)).
+:-use_module(library(statistics)).
 
 pred percorso(incrocio,incrocio,incrocio).
 
@@ -394,8 +395,10 @@ percorso(X,Y,Z):-
 	statistics(globalused,GlobalStack),
 	statistics(localused,LocalStack),
 	write('Stack Globale: '),write(GlobalStack),writeln('Bytes'),
-	write('Stack Locale: '),write(LocalStack),writeln('Bytes').
+	write('Stack Locale: '),write(LocalStack),writeln('Bytes'),
 	%retractall(inc(st(_,_,_,_,_))).
+	statistics(inferences,NumInferences),
+        write('Numero di Inferenze: '),write(NumInferences).
 
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
