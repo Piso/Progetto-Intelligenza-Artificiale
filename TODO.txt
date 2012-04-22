@@ -1,15 +1,17 @@
-
+Aggiornamenti Finali: 22/04 ore 20.55
  
 TODO (dal piu' importante al meno importante):
 
-	-calcolare la distanza di manhattan --> DONE
-	-inserire distanza euclidea e di manhattan come euristiche
-	-creato file "benchmark" --->evacuazioneincorsoUI.pl (secondo me da integrare)
-		----> Quasi fatto.
+	-creato file "benchmark" --->rifinire
+	-relazione -> riguardare e concludere -> vorrei fare la mappa da inserire stasera.
+	-l'impaginazione fa schifo...trovare il modo di sistemare le pagine.
+	-controllare tutti i files di codice e rimuovere commenti inutili e inserire quelli definitivi.
 
-	-testing di A*
-	-costraint e cazzate varie extra
-	-relazione
+
+
+-poi speriamo che sia FINITA XD
+
+
 
 
 
